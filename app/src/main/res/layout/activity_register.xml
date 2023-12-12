@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".RegisterActivity"
+    android:padding="70dp">
+
+
+    <ImageView
+        android:id="@+id/iv_register_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/btn_star_big_on"
+        android:contentDescription="@string/logo_de_l_appli" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:text="@string/inventory_manager"
+        android:textSize="30sp" />
+
+    <!-- Login -->
+
+    <EditText
+        android:id="@+id/et_email_registerActivity"
+        android:inputType="textEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:hint="@string/email_address"
+        android:minHeight="48dp"/>
+
+    <!-- password -->
+
+    <EditText
+        android:id="@+id/et_password_registerActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:minHeight="48dp"/>
+
+    <!-- confirm password -->
+
+    <EditText
+        android:id="@+id/et_confirmPassword_registerActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/btn_register_registerActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btn_register_onClick"
+        android:text="@string/register"
+        android:layout_marginTop="25dp"
+
+        />
+
+</LinearLayout>

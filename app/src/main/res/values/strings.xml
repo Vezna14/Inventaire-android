@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">pfa</string>
+    <string name="register">Register</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="username">Username</string>
+    <string name="inventory_manager">Inventory Manager</string>
+    <string name="logo_de_l_appli">Logo de L\'appli</string>
+    <string name="password">Password</string>
+    <string name="email_address">Email address</string>
 </resources>
