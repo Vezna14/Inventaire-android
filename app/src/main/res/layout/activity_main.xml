@@ -1,18 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:padding="70dp">
+
+
+    <ImageView
+        android:id="@+id/iv_children_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/btn_star_big_on"
+        android:contentDescription="@string/logo_de_l_appli"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="100dp"
+        android:text="@string/inventory_manager"
+        android:textSize="30sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Button create account -->
+    <Button
+        android:id="@+id/btn_createAccount_mainActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:onClick="mainLayoutClickEvent"
+        android:text="@string/account_creation"/>
+
+    <!-- Login -->
+
+    <EditText
+        android:id="@+id/et_email_main"
+        android:inputType="textEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:hint="@string/email_address"
+        android:minHeight="48dp"/>
+
+    <!-- password -->
+
+    <EditText
+        android:id="@+id/et_password_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:minHeight="48dp"/>
+
+    <Button
+        android:id="@+id/btn_login_mainActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="mainLayoutClickEvent"
+        android:text="@string/login"
+        android:layout_marginTop="25dp"/>
+
+
+</LinearLayout>
