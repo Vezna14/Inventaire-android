@@ -10,18 +10,18 @@ import androidx.room.Update
 interface UserDao {
 
     @Query ("SELECT * FROM users")
-    fun getAllUsers(): List<UserRecord>
+     fun getAllUsers(): List<UserRecord>?
     @Query("SELECT * FROM Users WHERE email = :email")
-    fun getUserByEmail(email: String): UserRecord
+     fun getUserByEmail(email: String): UserRecord?
     @Query("SELECT * FROM Users WHERE id = :id")
-    fun getUserById(id: String): UserRecord
+     fun getUserById(id: String): UserRecord?
     @Query("SELECT * FROM Users WHERE email = :email AND password=:password")
-    fun getUserByEmailAndPassword(email: String,password: String): UserRecord
+     fun getUserByEmailAndPassword(email: String,password: String): UserRecord?
     @Insert
-    fun insertUser(vararg listOfUsers: UserRecord)
+     fun insertUser(vararg user: UserRecord)
     @Update
-    fun updateUser(user: UserRecord)
+     fun updateUser(user: UserRecord)
     @Delete
-    fun deleteUser(user: UserRecord)
+     fun deleteUser(user: UserRecord)
 
 }
