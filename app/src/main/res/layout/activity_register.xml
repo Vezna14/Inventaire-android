@@ -61,7 +61,7 @@
         android:id="@+id/btn_register_registerActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="btn_register_onClick"
+        android:onClick="RegisterLayoutClickEvent"
         android:text="@string/register"
         android:layout_marginTop="25dp"
 
