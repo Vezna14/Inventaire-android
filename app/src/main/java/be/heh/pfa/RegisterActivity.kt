@@ -28,10 +28,18 @@ import kotlinx.coroutines.withContext
 import java.util.regex.Pattern
 
 class RegisterActivity : AppCompatActivity() {
+    var permission: Boolean = false
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        permission = intent?.getBooleanExtra("permission", false) ?: false
+        // Ajoute une impression de débogage pour vérifier la valeur de "permission"
+        Log.d("----------------------RegisterActivity", "Valeur de permission : $permission")
+
     }
+
 
 
      fun RegisterLayoutClickEvent(v: View) {
@@ -75,8 +83,13 @@ class RegisterActivity : AppCompatActivity() {
 
     //if (password.contains(" "){print("attention , mdp en un seul mot uniquement")}
     private fun registerNewUser() {
+        // Ajoute une impression de débogage avant d'utiliser "permission"
+        Log.d("-----------------------------------------RegisterActivity", "Avant d'utiliser permission : $permission")
         if (validateInput()) {
-            val user = User(0, et_email_registerActivity.text.toString(), et_password_registerActivity.text.toString())
+            val email = et_email_registerActivity.text.toString()
+            val password = et_password_registerActivity.text.toString()
+            val user = User(0, email, password, permission)
+            //val user = User(0, et_email_registerActivity.text.toString(), et_password_registerActivity.text.toString(),permission)
             // Utilisation de coroutines pour effectuer l'insertion de manière asynchrone
             GlobalScope.launch(Dispatchers.IO) {
                 val db = Room.databaseBuilder(applicationContext, MyDB::class.java, "MyDataBase").build()
