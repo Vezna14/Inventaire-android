@@ -1,0 +1,62 @@
+<!-- res/layout/user_item.xml -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="25dp"
+    app:cardBackgroundColor="#416750A4">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <!-- Image à gauche -->
+        <ImageView
+            android:id="@+id/iv_userIcon_userCardViewItem"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:src="@drawable/user_icon"
+            android:scaleType="centerCrop"
+            android:contentDescription="User Image"
+            android:layout_gravity="center"
+            />
+
+        <!-- Conteneur vertical pour l'adresse email et la permission -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+
+            <!-- Adresse email -->
+            <TextView
+                android:id="@+id/tv_userEmail_userCardViewItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Email Placeholder"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Permission dans EditText -->
+            <EditText
+                android:id="@+id/et_userPermission_userCardViewItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Permission"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <!-- Bouton Apply à droite -->
+        <Button
+            android:id="@+id/bt_editUser_userCardViewItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Edit" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

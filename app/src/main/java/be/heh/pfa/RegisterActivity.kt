@@ -1,22 +1,15 @@
 package be.heh.pfa
 
 import android.content.Intent
-import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.room.Room
 import be.heh.pfa.db.MyDB
 import be.heh.pfa.db.UserRecord
 import be.heh.pfa.model.User
-import kotlinx.android.synthetic.main.activity_main.btn_createAccount_mainActivity
-import kotlinx.android.synthetic.main.activity_main.btn_login_mainActivity
-import kotlinx.android.synthetic.main.activity_main.et_password_mainActivity
 
 //importer les éléments du layout activity register
 import kotlinx.android.synthetic.main.activity_register.*
@@ -108,7 +101,7 @@ class RegisterActivity : AppCompatActivity() {
                     dao.insertUser(UserRecord(user.id, user.email, user.password, user.canWrite))
                     //withContext(Dispatchers.Main){} --> executer du code dans le THREAD UI
                     withContext(Dispatchers.Main) {Toast.makeText(applicationContext, "Utilisateur enregistré avec succès", Toast.LENGTH_SHORT).show()}
-                    val intent = Intent(this@RegisterActivity,MainActivity::class.java)
+                    val intent = Intent(this@RegisterActivity,LoginActivity::class.java)
                     startActivity(intent)
                 }
             }

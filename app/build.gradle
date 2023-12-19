@@ -34,6 +34,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -47,10 +50,15 @@ dependencies {
     //androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'*/
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
+
+    //RecyclerView
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
 // Dependencies for working with Architecture components
 // You'll probably have to update the version numbers in build.gradle (Project)
 // Room components
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.5'
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 // Lifecycle components

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".LoginActivity"
+    android:padding="60dp"
+    >
+
+
+    <ImageView
+        android:id="@+id/iv_children_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/btn_star_big_on"
+        android:contentDescription="@string/logo_de_l_appli"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:text="@string/inventory_manager"
+        android:layout_gravity="center"
+        android:textSize="28sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:text="@string/login"
+        android:textSize="20sp" />
+
+
+    <!-- Button create account -->
+    <Button
+        android:id="@+id/btn_createAccount_loginActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:onClick="mainLayoutClickEvent"
+        android:text="@string/account_creation"/>
+
+    <!-- Login -->
+
+    <EditText
+        android:id="@+id/et_email_loginActivity"
+        android:inputType="textEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:hint="@string/email_address"
+        android:minHeight="48dp"/>
+
+    <!-- password -->
+
+    <EditText
+        android:id="@+id/et_password_loginActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:minHeight="48dp"/>
+
+    <Button
+        android:id="@+id/btn_login_loginActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="mainLayoutClickEvent"
+        android:text="@string/login"
+        android:layout_marginTop="25dp"/>
+
+
+</LinearLayout>
