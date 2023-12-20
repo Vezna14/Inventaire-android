@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/values/arrays.xml -->
+<resources>
+    <string-array name="permissions_array">
+        <item>R</item>
+        <item>R/W</item>
+        <item>Bloqué</item>
+        <!-- Ajoutez d'autres options si nécessaire -->
+    </string-array>
+
+    <string-array name="enable_disable_array">
+        <item>Activer</item>
+        <item>Désactiver</item>
+        <!-- Ajoutez d'autres options si nécessaire -->
+    </string-array>
+</resources>

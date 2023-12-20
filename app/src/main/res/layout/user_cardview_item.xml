@@ -48,15 +48,17 @@
 
                 >
                 <!-- Permission -->
-                <TextView
-                    android:id="@+id/tv_userPermission_userCardViewItem"
+                <Spinner
+                    android:id="@+id/spin_userPermission_userCardViewItem"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Permission"
                     android:inputType="text"
                     android:textSize="18sp"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:entries="@array/permissions_array"
+                    />
 
                 <!-- Permission -->
                 <ImageView

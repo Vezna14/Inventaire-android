@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_permission_menuManagement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Gérer les permissions" />
+    <item
+        android:id="@+id/item_enableDisable_menuManagement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Activer/Désactiver" />
+    <item
+        android:id="@+id/item_delete_menuManagement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Supprimer" />
+
+</menu>

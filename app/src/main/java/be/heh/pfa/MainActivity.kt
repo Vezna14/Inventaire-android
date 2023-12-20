@@ -6,7 +6,7 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import be.heh.pfa.home.HomeFragment
 import be.heh.pfa.inventory.InventoryFragment
-import be.heh.pfa.profile.ProfileFragment
+import be.heh.pfa.profile.UserManagementFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                         return true
                     }
                     R.id.navigation_profile -> {
-                        replaceFragment(ProfileFragment())
+                        replaceFragment(UserManagementFragment())
                         return true
                     }
                 }

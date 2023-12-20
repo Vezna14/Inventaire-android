@@ -16,7 +16,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ProfileFragment : Fragment() {
+class UserManagementFragment : Fragment() {
     private lateinit var userRecyclerView: RecyclerView
     private lateinit var userAdapter: UserAdapter
 
@@ -24,7 +24,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_usermanagement, container, false)
 
         // Récupérer la RecyclerView par son ID
         userRecyclerView = view.findViewById(R.id.userRecyclerView)

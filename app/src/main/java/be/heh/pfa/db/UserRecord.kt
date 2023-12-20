@@ -10,6 +10,6 @@ data class UserRecord(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val email: String,
     val password: String,
-    val canWrite: Boolean = false,
+    var canWrite: Boolean = false,
     var isActive: Boolean = true
 )

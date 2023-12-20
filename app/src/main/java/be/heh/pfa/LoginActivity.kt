@@ -88,10 +88,8 @@ class LoginActivity : AppCompatActivity() {
                     else{
                         withContext(Dispatchers.Main){Toast.makeText(applicationContext,"Accès refusé.\nCompte bloqué.",Toast.LENGTH_SHORT).show()}
                     }
-                    val myLoggedUser=dao.getUserByEmailAndPassword(user.email,user.password)
-
-                    goToMainActivity()
-                    withContext(Dispatchers.Main){Toast.makeText(applicationContext,"mail : "+ user.email + "perm : "+ myLoggedUser?.canWrite ,Toast.LENGTH_SHORT).show()}
+                    //val myLoggedUser=dao.getUserByEmailAndPassword(user.email,user.password)
+                    //withContext(Dispatchers.Main){Toast.makeText(applicationContext,"mail : "+ user.email + "perm : "+ myLoggedUser?.canWrite ,Toast.LENGTH_SHORT).show()}
                 }
                 else{
                     withContext(Dispatchers.Main){Toast.makeText(applicationContext,"identifiants incorrectes",Toast.LENGTH_SHORT).show()}
