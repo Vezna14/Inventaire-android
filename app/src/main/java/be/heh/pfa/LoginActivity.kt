@@ -79,10 +79,18 @@ class LoginActivity : AppCompatActivity() {
                 val db =Room.databaseBuilder(applicationContext, MyDB::class.java, "MyDataBase").build()
                 val dao = db.userDao()
                 //val dbl=dao.getAllUsers()
-                if(dao.getUserByEmailAndPassword(user.email,user.password) != null){
+                var pretendedUser = dao.getUserByEmailAndPassword(user.email,user.password)
+                if(pretendedUser != null ){
+                    if(pretendedUser.isActive){
+                        withContext(Dispatchers.Main){Toast.makeText(applicationContext,"Connexion réussie "+ pretendedUser.email,Toast.LENGTH_SHORT).show()}
+                        goToMainActivity()
+                    }
+                    else{
+                        withContext(Dispatchers.Main){Toast.makeText(applicationContext,"Accès refusé.\nCompte bloqué.",Toast.LENGTH_SHORT).show()}
+                    }
                     val myLoggedUser=dao.getUserByEmailAndPassword(user.email,user.password)
 
-                    goToPageActivity()
+                    goToMainActivity()
                     withContext(Dispatchers.Main){Toast.makeText(applicationContext,"mail : "+ user.email + "perm : "+ myLoggedUser?.canWrite ,Toast.LENGTH_SHORT).show()}
                 }
                 else{
@@ -100,7 +108,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun goToPageActivity(){
+    private fun goToMainActivity(){
 
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
         startActivity(intent)

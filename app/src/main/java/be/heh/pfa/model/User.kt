@@ -6,7 +6,8 @@ class User (
     var id: Long=0,
     var email: String,
     var rawPassword: String,
-    var canWrite: Boolean = false
+    var canWrite: Boolean = false,
+    var isActive: Boolean = true
     ) {
     var password: String = hashString(rawPassword) // Le mot de passe est haché lors de l'initialisation
 

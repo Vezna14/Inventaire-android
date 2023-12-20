@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -16,9 +15,10 @@ public class UserAdapter(private val users: List<UserRecord>) : RecyclerView.Ada
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val userImageView: ImageView = itemView.findViewById(R.id.iv_userIcon_userCardViewItem)
         val userEmailTextView: TextView = itemView.findViewById(R.id.tv_userEmail_userCardViewItem)
-        val permissionEditText: EditText = itemView.findViewById(R.id.et_userPermission_userCardViewItem)
-        val applyButton: Button = itemView.findViewById(R.id.bt_editUser_userCardViewItem)
+        val permissionTextView: TextView = itemView.findViewById(R.id.tv_userPermission_userCardViewItem)
+        val editUserOptions: ImageView = itemView.findViewById(R.id.iv_editUser_userCardViewItem)
     }
+
 
 
         //onCreateViewHolder crée la vue qui va afficher les items
@@ -31,8 +31,13 @@ public class UserAdapter(private val users: List<UserRecord>) : RecyclerView.Ada
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val currentUser = users[position]
         holder.userEmailTextView.text = currentUser.email
-        holder.permissionEditText.setText(currentUser.canWrite.toString())
-        holder.applyButton.setOnClickListener{
+        if(currentUser.canWrite){
+            holder.permissionTextView.setText("R/W")
+        }
+        else{
+            holder.permissionTextView.setText("R")
+        }
+        holder.editUserOptions.setOnClickListener{
             //Gérer le clic sur le bouton "Apply change ici
             Log.i("Cardview btn Click", "click sur le bouton edit de la cardview de : "+holder.userEmailTextView.text.toString())
         }

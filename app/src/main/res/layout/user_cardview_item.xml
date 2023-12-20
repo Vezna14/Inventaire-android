@@ -40,23 +40,45 @@
                 android:text="User Email Placeholder"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-
-            <!-- Permission dans EditText -->
-            <EditText
-                android:id="@+id/et_userPermission_userCardViewItem"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="Permission"
-                android:inputType="text" />
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+
+                >
+                <!-- Permission -->
+                <TextView
+                    android:id="@+id/tv_userPermission_userCardViewItem"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Permission"
+                    android:inputType="text"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"/>
+
+                <!-- Permission -->
+                <ImageView
+                    android:id="@+id/iv_isActive_userCardViewItem"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/active"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="65dp"
+                    />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <!-- Bouton Apply à droite -->
-        <Button
-            android:id="@+id/bt_editUser_userCardViewItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/iv_editUser_userCardViewItem"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
-            android:text="Edit" />
+            android:src="@drawable/vertical_dot_menu"
+             />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
