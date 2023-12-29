@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeFragment">
+    tools:context=".home.HomeFragment"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="horizontal"
+       android:paddingTop="20dp"
+       android:gravity="center|top">
+
+       <Button
+           android:id="@+id/btn_borrow_homeFragment"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Emprunt"
+           android:layout_marginRight="35dp"
+           android:onClick="homeLayoutClickEvent"/>
+       <Button
+           android:id="@+id/btn_giveBack_homeFragment"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Remise"
+           android:onClick="homeLayoutClickEvent"/>
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/text_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+</LinearLayout>

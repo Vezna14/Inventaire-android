@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".inventory.DeviceDetailsActivity"
+    android:orientation="vertical"
+    android:gravity="center|top">
+
+    <ImageView
+        android:id="@+id/iv_deviceIcon_deviceDetailsActivity"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_smartphone"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="25dp"/>
+
+    <TextView
+        android:id="@+id/tv_deviceId_deviceDetailsActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="13"
+        android:inputType="text"
+        android:text="ID" />
+
+    <EditText
+        android:id="@+id/et_deviceType_deviceDetailsActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="13"
+        android:inputType="text"
+        android:text="Type"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/et_deviceBrand_deviceDetailsActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="13"
+        android:inputType="text"
+        android:text="Marque"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/et_deviceModel_deviceDetailsActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="13"
+        android:inputType="text"
+        android:text="Modèle"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/et_deviceRefNumber_deviceDetailsActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="13"
+        android:inputType="text"
+        android:text="Numéro de reférence unique"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/et_deviceWebsite_deviceDetailsActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="13"
+        android:inputType="text"
+        android:text="Site web"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/et_deviceIsBorrowed_deviceDetailsActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="13"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:text="disponible ou pas" />
+
+    <Button
+        android:id="@+id/btn_confirmChanges_deviceDetailsActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirmer les changements"
+        android:ems="10"
+        android:layout_marginTop="10dp"
+        android:onClick="deviceDetailsLayoutClickEvent"/>
+
+
+</LinearLayout>

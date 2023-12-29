@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "users")
 data class UserRecord(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val email: String,
-    val password: String,
+    var email: String,
+    var password: String,
     var canWrite: Boolean = false,
     var isActive: Boolean = true,
     var isSuperAdmin: Boolean = false

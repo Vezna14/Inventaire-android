@@ -17,7 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.concurrent.Executors
 
 class InventoryFragment : Fragment() {
     private lateinit var deviceRecyclerView: RecyclerView
@@ -43,7 +42,7 @@ class InventoryFragment : Fragment() {
             val db = Room.databaseBuilder(requireContext(), MyDb::class.java, "MyDataBase").build()
             val dao = db.deviceDao()
 
-           /* // Exemple d'insertion pré-population
+           // Exemple d'insertion pré-population
             val device1 = DeviceRecord(
                 type = "Mobile",
                 brand = "Samsung",
@@ -64,7 +63,7 @@ class InventoryFragment : Fragment() {
             )
 
             dao.insertDevice(device1)
-            dao.insertDevice(device2)*/
+            dao.insertDevice(device2)
 
             val devicesList = dao.getAllDevices().toMutableList()
             Log.i("AAAAAAAAAAAAAAAAAAAAAA", "est-ce qu'il y a des devices dans la db?")
