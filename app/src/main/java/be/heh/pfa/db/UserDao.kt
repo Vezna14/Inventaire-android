@@ -10,7 +10,7 @@ import androidx.room.Update
 interface UserDao {
 
     @Query ("SELECT * FROM users")
-     fun getAllUsers(): List<UserRecord>?
+     fun getAllUsers(): MutableList<UserRecord>?
     @Query("SELECT * FROM Users WHERE email = :email")
      fun getUserByEmail(email: String): UserRecord?
     @Query("SELECT * FROM Users WHERE id = :id")
@@ -18,7 +18,7 @@ interface UserDao {
     @Query("SELECT * FROM Users WHERE email = :email AND password=:password")
      fun getUserByEmailAndPassword(email: String,password: String): UserRecord?
 
-    @Query("SELECT EXISTS (SELECT 1 FROM users LIMIT 1)")
+    @Query("SELECT EXISTS (SELECT 1 FROM users WHERE id=1)")
     fun hasAtLeastOneUser(): Boolean
 
 

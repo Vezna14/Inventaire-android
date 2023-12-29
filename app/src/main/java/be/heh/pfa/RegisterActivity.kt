@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.room.Room
-import be.heh.pfa.db.MyDB
+import be.heh.pfa.db.MyDb
 import be.heh.pfa.db.UserRecord
 import be.heh.pfa.model.User
 
@@ -28,7 +28,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         permission = intent?.getBooleanExtra("permission", false) ?: false
-        // Ajoute une impression de débogage pour vérifier la valeur de "permission"
+        // débogage pour vérifier la valeur de "permission"
         Log.d("----------------------RegisterActivity", "Valeur de permission : $permission")
 
     }
@@ -81,24 +81,24 @@ class RegisterActivity : AppCompatActivity() {
         if (validateInput()) {
             val email = et_email_registerActivity.text.toString()
             val password = et_password_registerActivity.text.toString()
-            val user = User(0, email, password, permission)
-            //val user = User(0, et_email_registerActivity.text.toString(), et_password_registerActivity.text.toString(),permission)
-            // Utilisation de coroutines pour effectuer l'insertion de manière asynchrone
+            val user = User(id=0, email=email, rawPassword=password, canWrite=permission, isActive=true,isSuperAdmin=permission)
+
+            // coroutines pour effectuer l'insertion de manière asynchrone
             GlobalScope.launch(Dispatchers.IO) {
-                val db = Room.databaseBuilder(applicationContext, MyDB::class.java, "MyDataBase").build()
+                val db = Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
                 val dao = db.userDao()
 
                 if (dao.getUserByEmail(user.email) != null) {
                     // Adresse email déjà utilisée
-                    // Utilisation de withContext pour passer du contexte IO au contexte principal (UI)
-                    //withContext(Dispatchers.Main){} --> executer du code dans le THREAD UI
+                    // withContext pour passer du contexte IO au contexte principal (UI)
+                    //withContext(Dispatchers.Main){} = executer du code dans le THREAD UI
                     withContext(Dispatchers.Main) {
                         Log.i("RegisterActivity", "Adresse email déjà utilisée")
                         Toast.makeText(applicationContext,"Adresse e-mail déjà utilisée",Toast.LENGTH_SHORT).show()
                     }
                 } else {
 
-                    dao.insertUser(UserRecord(user.id, user.email, user.password, user.canWrite))
+                    dao.insertUser(UserRecord(user.id, user.email, user.password, user.canWrite, user.isActive, user.isSuperAdmin))
                     //withContext(Dispatchers.Main){} --> executer du code dans le THREAD UI
                     withContext(Dispatchers.Main) {Toast.makeText(applicationContext, "Utilisateur enregistré avec succès", Toast.LENGTH_SHORT).show()}
                     val intent = Intent(this@RegisterActivity,LoginActivity::class.java)

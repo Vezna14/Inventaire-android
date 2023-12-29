@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import be.heh.pfa.R
 import be.heh.pfa.UserAdapter
-import be.heh.pfa.db.MyDB
+import be.heh.pfa.db.MyDb
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -31,12 +31,12 @@ class UserManagementFragment : Fragment() {
         userRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         // Initialiser l'adaptateur et le passer à la RecyclerView
-        userAdapter = UserAdapter(emptyList())
+        userAdapter = UserAdapter(mutableListOf())
         userRecyclerView.adapter = userAdapter
 
         // Charger les utilisateurs depuis la base de données et mettre à jour l'adaptateur
         GlobalScope.launch(Dispatchers.IO) {
-            val db = Room.databaseBuilder(requireContext(), MyDB::class.java, "MyDataBase").build()
+            val db = Room.databaseBuilder(requireContext(), MyDb::class.java, "MyDataBase").build()
             val dao = db.userDao()
             val usersList = dao.getAllUsers()
 

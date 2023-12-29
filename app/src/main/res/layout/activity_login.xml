@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:onClick="mainLayoutClickEvent"
+        android:onClick="loginLayoutClickEvent"
         android:text="@string/account_creation"/>
 
     <!-- Login -->
@@ -68,7 +68,7 @@
         android:id="@+id/btn_login_loginActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="mainLayoutClickEvent"
+        android:onClick="loginLayoutClickEvent"
         android:text="@string/login"
         android:layout_marginTop="25dp"/>
 

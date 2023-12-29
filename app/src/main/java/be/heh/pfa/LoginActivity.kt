@@ -3,11 +3,13 @@ package be.heh.pfa
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.room.Room
-import be.heh.pfa.db.MyDB
+import be.heh.pfa.db.MyDb
+import be.heh.pfa.model.AuthenticatedUser
 import be.heh.pfa.model.User
 
 //importer les éléments du layout activity main
@@ -33,17 +35,17 @@ class LoginActivity : AppCompatActivity() {
         val firstStart = sharedPrefs.getBoolean("firstStart", true)
 
         if (firstStart) {
-            showStartDialog()
+            showCreateAdminDialog()
         }*/
         GlobalScope.launch(Dispatchers.IO) {
-            val db = Room.databaseBuilder(applicationContext, MyDB::class.java, "MyDataBase").build()
+            val db = Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
             val dao = db.userDao()
             val hasUser = dao.hasAtLeastOneUser()
 
             if (!hasUser) {
                 // Aucun User dans la DB --> faut créer le Super User
                 withContext(Dispatchers.Main) {
-                    showStartDialog()
+                    showCreateAdminDialog()
                 }
             }
         }
@@ -58,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun mainLayoutClickEvent(v: View) {
+    fun loginLayoutClickEvent(v: View) {
         when (v.id) {
             btn_login_loginActivity.id -> checkCredential()
             btn_createAccount_loginActivity.id -> goToRegisterActivity()
@@ -76,23 +78,28 @@ class LoginActivity : AppCompatActivity() {
             val user = User(0, mail, mdp)
             // Utilisation de coroutines pour effectuer la vérif avec la DB de manière asynchrone
             GlobalScope.launch(Dispatchers.IO) {
-                val db =Room.databaseBuilder(applicationContext, MyDB::class.java, "MyDataBase").build()
+                val db =Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
                 val dao = db.userDao()
                 //val dbl=dao.getAllUsers()
                 var pretendedUser = dao.getUserByEmailAndPassword(user.email,user.password)
                 if(pretendedUser != null ){
                     if(pretendedUser.isActive){
                         withContext(Dispatchers.Main){Toast.makeText(applicationContext,"Connexion réussie "+ pretendedUser.email,Toast.LENGTH_SHORT).show()}
+                        AuthenticatedUser.setAuthenticatedUserInfo(pretendedUser)
+                        Log.i("BTN login------------------------", "user isAdmin :"+AuthenticatedUser.isSuperAdmin.toString())
+                        Log.i("BTN login------------------------", "user email :"+AuthenticatedUser.email)
+                        Log.i("BTN login------------------------", "user password :"+AuthenticatedUser.password)
+                        Log.i("BTN login------------------------", "user isActive :"+AuthenticatedUser.isActive.toString())
+                        Log.i("BTN login------------------------", "user canWrite :"+AuthenticatedUser.canWrite.toString())
                         goToMainActivity()
                     }
                     else{
                         withContext(Dispatchers.Main){Toast.makeText(applicationContext,"Accès refusé.\nCompte bloqué.",Toast.LENGTH_SHORT).show()}
                     }
-                    //val myLoggedUser=dao.getUserByEmailAndPassword(user.email,user.password)
-                    //withContext(Dispatchers.Main){Toast.makeText(applicationContext,"mail : "+ user.email + "perm : "+ myLoggedUser?.canWrite ,Toast.LENGTH_SHORT).show()}
+
                 }
                 else{
-                    withContext(Dispatchers.Main){Toast.makeText(applicationContext,"identifiants incorrectes",Toast.LENGTH_SHORT).show()}
+                    withContext(Dispatchers.Main){Toast.makeText(applicationContext,"identifiants incorrects",Toast.LENGTH_SHORT).show()}
                     }
                 }
             }
@@ -109,12 +116,13 @@ class LoginActivity : AppCompatActivity() {
     private fun goToMainActivity(){
 
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
+
         startActivity(intent)
 
     }
 
     //pop up pour la création du Super Amdin
-    private fun showStartDialog() {
+    private fun showCreateAdminDialog() {
         AlertDialog.Builder(this)
             .setTitle("Configuration du Super Admin")
             .setMessage("Il s'agit du premier démarrage de l'application.\nAppuyez sur OK pour configurer le Super Admin.")

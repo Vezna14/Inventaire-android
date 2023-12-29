@@ -1,9 +1,9 @@
 package be.heh.pfa
 
+import android.content.DialogInterface
 import android.util.Log
 import be.heh.pfa.db.UserRecord
 import android.view.LayoutInflater
-import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -11,24 +11,23 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
-import be.heh.pfa.db.MyDB
+import be.heh.pfa.db.MyDb
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
 
-public class UserAdapter(private val users: List<UserRecord>) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+public class UserAdapter(private val users: MutableList<UserRecord>) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val userImageView: ImageView = itemView.findViewById(R.id.iv_userIcon_userCardViewItem)
         val userEmailTextView: TextView = itemView.findViewById(R.id.tv_userEmail_userCardViewItem)
         val permissionSpinner: Spinner = itemView.findViewById(R.id.spin_userPermission_userCardViewItem)
-        val editUserOptions: ImageView = itemView.findViewById(R.id.iv_editUser_userCardViewItem)
+        val DeleteUserImageView: ImageView = itemView.findViewById(R.id.iv_deleteUser_userCardViewItem)
         val isActiveImageView: ImageView = itemView.findViewById(R.id.iv_isActive_userCardViewItem)
     }
 
@@ -57,46 +56,76 @@ public class UserAdapter(private val users: List<UserRecord>) : RecyclerView.Ada
             }
 
 
-            holder.editUserOptions.setOnClickListener {
-                //Gérer le clic sur les 3 petits points
+            holder.DeleteUserImageView.setOnClickListener {
+                //Gérer le clic sur l'cione de poubelle
                 Log.i(
                     "Cardview btn Click",
                     "click sur le bouton edit de la cardview de : " + holder.userEmailTextView.text.toString()
                 )
-                val popupMenu = PopupMenu(holder.itemView.context, holder.editUserOptions)
-                val inflater: MenuInflater = popupMenu.menuInflater
-                inflater.inflate(R.menu.user_management_menu, popupMenu.menu)
-                popupMenu.setOnMenuItemClickListener { menuItem ->
-                    when (menuItem.itemId) {
-                        R.id.item_permission_menuManagement -> {
-                            // Gérer l'action "changer les permissions
-                            Log.i("PopupMenu", "permissions : ${holder.userEmailTextView.text}")
-                            true
-                        }
-
-                        R.id.item_enableDisable_menuManagement -> {
-                            // Gérer l'action "activer/désactiver"
-                            Log.i(
-                                "PopupMenu",
-                                "activer/désactiver : ${holder.userEmailTextView.text}"
+                AlertDialog.Builder(holder.itemView.context)
+                // Titre et message de l'AlertDialog
+                .setTitle("Confirmation")
+                .setMessage("Voulez-vous vraiment Suprimer cet utilisateur ?")
+                // Bouton "Confirmer"
+                .setPositiveButton("Confirmer") { dialog: DialogInterface?, which: Int ->
+                    // Code exécuté lorsque l'utilisateur clique sur "Confirmer"
+                    Log.i("AlertDialog", "Confirmation")
+                    GlobalScope.launch(Dispatchers.IO) {
+                        val db = Room.databaseBuilder(
+                            holder.itemView.context,
+                            MyDb::class.java,
+                            "MyDataBase"
+                        ).build()
+                        val dao = db.userDao()
+                        val userInfo: UserRecord =
+                            UserRecord(
+                                currentUser.id,
+                                currentUser.email,
+                                currentUser.password,
+                                currentUser.canWrite,
+                                currentUser.isActive
                             )
-                            true
-                        }
-
-                        R.id.item_delete_menuManagement -> {
-                            // Gérer l'action "Supprimer"
-                            Log.i("PopupMenu", "Supprimer : ${holder.userEmailTextView.text}")
-                            true
-                        }
-
-                        else -> false
+                        dao.deleteUser(userInfo)
                     }
+                    // Mettre à jour l'affichage
+                    users.removeAt(position)
+                    notifyItemRemoved(position)
                 }
+                // Bouton "Annuler"
+                    .setNegativeButton("Annuler") { dialog: DialogInterface?, which: Int ->
+                    // Code exécuté lorsque l'utilisateur clique sur "Annuler" (facultatif)
+                    Log.i("AlertDialog", "Annulation")
+                }
+                // Afficher l'AlertDialog
+                .show()
 
-                popupMenu.show()
 
+
+              /*  AlertDialog.Builder(holder.itemView.context)
+                    .setTitle("Options")
+                    .setItems(R.array.permissions_array) { dialog, which ->
+                        when (which) {
+                            0 -> {
+                                // Code à exécuter lorsque l'option "Modifier" est sélectionnée
+                                Toast.makeText(
+                                    holder.itemView.context,
+                                    "Option Modifier sélectionnée",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            1 -> {
+                                // Code à exécuter lorsque l'option "Supprimer" est sélectionnée
+                                Toast.makeText(
+                                    holder.itemView.context,
+                                    "Option Supprimer sélectionnée",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                    .show()
+                */
             }
-
 
 
             holder.permissionSpinner.onItemSelectedListener =
@@ -107,6 +136,7 @@ public class UserAdapter(private val users: List<UserRecord>) : RecyclerView.Ada
                         position: Int,
                         id: Long
                     ) {
+
                         // Gérer l'événement de sélection
                         val selectedPermission = parent?.getItemAtPosition(position).toString()
                         Log.i("Spinner", "Permission sélectionnée : $selectedPermission")
@@ -153,7 +183,7 @@ public class UserAdapter(private val users: List<UserRecord>) : RecyclerView.Ada
                         GlobalScope.launch(Dispatchers.IO) {
                             val db = Room.databaseBuilder(
                                 holder.itemView.context,
-                                MyDB::class.java,
+                                MyDb::class.java,
                                 "MyDataBase"
                             ).build()
                             val dao = db.userDao()
@@ -163,7 +193,8 @@ public class UserAdapter(private val users: List<UserRecord>) : RecyclerView.Ada
                                     currentUser.email,
                                     currentUser.password,
                                     currentUser.canWrite,
-                                    currentUser.isActive
+                                    currentUser.isActive,
+                                    currentUser.isSuperAdmin
                                 )
                             dao.updateUser(userInfo)
                         }

@@ -1,6 +1,5 @@
 package be.heh.pfa.db
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -11,5 +10,6 @@ data class UserRecord(
     val email: String,
     val password: String,
     var canWrite: Boolean = false,
-    var isActive: Boolean = true
+    var isActive: Boolean = true,
+    var isSuperAdmin: Boolean = false
 )
