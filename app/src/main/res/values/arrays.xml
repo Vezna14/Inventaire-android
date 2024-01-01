@@ -8,9 +8,9 @@
         <!-- Ajoutez d'autres options si nécessaire -->
     </string-array>
 
-    <string-array name="enable_disable_array">
-        <item>Activer</item>
-        <item>Désactiver</item>
+    <string-array name="Borrowed_notBorrowed_array">
+        <item>Disponible</item>
+        <item>indisponible</item>
         <!-- Ajoutez d'autres options si nécessaire -->
     </string-array>
 </resources>

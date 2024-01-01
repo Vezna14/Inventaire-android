@@ -7,16 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.room.Room
 
 import be.heh.pfa.R
 import be.heh.pfa.db.MyDb
+import be.heh.pfa.model.AuthenticatedUser
 import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.CaptureActivity
 
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -50,13 +49,14 @@ class HomeFragment : Fragment() {
         button2.setOnClickListener {
             giveBackDevice()
         }
-    }
-    /*fun homeLayoutClickEvent(v: View) {
-        when (v.id) {
-            btn_borrow_homeFragment.id -> borrowDevice()
-            btn_giveBack_homeFragment.id -> giveBackDevice()
+
+        val logoutBtn: Button = view.findViewById(R.id.btn_logout_homeFragment)
+            logoutBtn.setOnClickListener {
+                AuthenticatedUser.clearAuthenticatedUser()
+                requireActivity().finish()
         }
-    }*/
+    }
+
 
     fun borrowDevice() {
         isBorrowed = true
@@ -83,13 +83,14 @@ class HomeFragment : Fragment() {
         if (result != null) {
             if (result.contents != null) {
                 // Handle the scanned QR code
-                val scannedId = result.contents
-                checkDatabase(scannedId, isBorrowed)
+                val resultScan = result.contents.split(",")
+                val scannedDeviceRefNumber = resultScan[3]
+                checkDatabase(scannedDeviceRefNumber, isBorrowed)
             }
         }
     }
 
-    private fun checkDatabase(scannedId: String, isBorrowed: Boolean) {
+    private fun checkDatabase(scannedRefNumber: String, isBorrowed: Boolean) {
         GlobalScope.launch(Dispatchers.IO) {
             val db = Room.databaseBuilder(
                 requireContext(),
@@ -98,8 +99,9 @@ class HomeFragment : Fragment() {
             val dao = db.deviceDao()
 
 
+
             var device = withContext(Dispatchers.Default) {
-                dao.getDeviceById(scannedId.toLong())
+                dao.getDeviceByReferenceNumber(scannedRefNumber)
             }
 
 

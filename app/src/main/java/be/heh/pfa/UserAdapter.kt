@@ -90,6 +90,7 @@ public class UserAdapter(private val users: MutableList<UserRecord>) : RecyclerV
                     // Mettre à jour l'affichage
                     users.removeAt(position)
                     notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, users.size)
                 }
                 // Bouton "Annuler"
                     .setNegativeButton("Annuler") { dialog: DialogInterface?, which: Int ->

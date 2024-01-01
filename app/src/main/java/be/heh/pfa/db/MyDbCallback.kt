@@ -16,7 +16,7 @@ class MyDbCallback(private val context: Context) : RoomDatabase.Callback() {
         Log.i("AppDatabaseCallback", "onCreate callback is called")
         // Insérez ici le code pour pré-peupler la base de données
         // Vous pouvez utiliser un objet DAO pour effectuer des opérations d'insertion
-        /*GlobalScope.launch(Dispatchers.IO){
+        GlobalScope.launch(Dispatchers.IO){
             Log.i("AppDatabaseCallback", "Inserting data into the database")
             val deviceDao = MyDb.getInstance(context).deviceDao()
 
@@ -42,6 +42,6 @@ class MyDbCallback(private val context: Context) : RoomDatabase.Callback() {
 
             deviceDao.insertDevice(device1)
             deviceDao.insertDevice(device2)
-        }*/
+        }
     }
 }

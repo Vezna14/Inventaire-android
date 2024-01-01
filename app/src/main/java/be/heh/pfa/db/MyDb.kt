@@ -14,7 +14,7 @@ abstract class MyDb : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun deviceDao(): DeviceDao
 
-    /*
+
     companion object {
         @Volatile
         private var INSTANCE: MyDb? = null
@@ -32,5 +32,5 @@ abstract class MyDb : RoomDatabase() {
                 instance
             }
         }
-    }*/
+    }
 }

@@ -1,10 +1,12 @@
 package be.heh.pfa
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
+import be.heh.pfa.db.DeviceRecord
 import be.heh.pfa.home.HomeFragment
 import be.heh.pfa.inventory.InventoryFragment
 import be.heh.pfa.model.AuthenticatedUser
@@ -74,5 +76,6 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.container, fragment)
             .commit()
     }
+
 
 }

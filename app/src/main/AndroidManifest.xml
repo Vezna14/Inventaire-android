@@ -19,6 +19,9 @@
         android:theme="@style/Base.Theme.Pfa"
         tools:targetApi="31">
         <activity
+            android:name=".WebViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".inventory.DeviceDetailsActivity"
             android:exported="false" />
         <activity

@@ -9,6 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
-        tools:itemCount="8"/>
+        tools:itemCount="5"/>
+
+    <ImageView
+        android:id="@+id/iv_addDevice_fragmentInventory"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_add_round"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        />
 
 </RelativeLayout>

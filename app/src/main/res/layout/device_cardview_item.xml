@@ -1,107 +1,143 @@
 <!-- res/layout/user_item.xml -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
-    app:cardCornerRadius="5dp"
-    app:cardBackgroundColor="#416750A4">
+    app:cardBackgroundColor="#416750A4"
+    app:cardCornerRadius="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="16dp">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <!-- Image à gauche -->
-        <ImageView
-            android:id="@+id/iv_deviceIcon_deviceCardViewItem"
-            android:layout_width="50dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_smartphone"
-            android:scaleType="centerCrop"
-            android:contentDescription="User Image"
-            android:layout_gravity="center"
-            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!-- Image à gauche -->
+            <ImageView
+                android:id="@+id/iv_deviceIcon_deviceCardViewItem"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:layout_gravity="top"
+                android:contentDescription="User Image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_smartphone" />
+
+            <!-- Conteneur pour les deux ImageView à droite -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="right">
+
+                <!-- ImageView Supprimer -->
+                <ImageView
+                    android:id="@+id/iv_deleteDevice_deviceCardViewItem"
+                    android:layout_width="50dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/delete" />
+
+                <!-- ImageView Modifier -->
+                <ImageView
+                    android:id="@+id/iv_devicEdit_deviceCardViewItem"
+                    android:layout_width="35dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/ic_edit" />
+            </LinearLayout>
+        </LinearLayout>
+
 
         <!-- Conteneur vertical pour les informations du matériel -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginStart="16dp">
+            android:orientation="vertical">
 
-            <!-- Adresse email -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_deviceBrand_deviceCardViewItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:text="Brand"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_deviceModel_deviceCardViewItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Model Placeholder"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_deviceType_deviceCardViewItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Device Type Placeholder"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
-            <TextView
-                android:id="@+id/tv_deviceBrand_deviceCardViewItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Device Brand Placeholder"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/tv_deviceModel_deviceCardViewItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Device Model Placeholder"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+
+
             <TextView
                 android:id="@+id/tv_deviceRefNumber_deviceCardViewItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Device Ref Number Placeholder"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tv_deviceManufacturerWebsite_deviceCardViewItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Device Website Placeholder"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#0338FD"
+                />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center"
-                >
-                <ImageView
-                    android:id="@+id/iv_deviceQrCode_deviceCardViewItem"
-                    android:layout_width="50dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_scan_qr_code"
-                    android:layout_marginRight="15dp"
-                    />
+                android:orientation="horizontal">
 
+                <!-- <ImageView
+                     android:id="@+id/iv_deviceQrCode_deviceCardViewItem"
+                     android:layout_width="50dp"
+                     android:layout_height="60dp"
+                     android:layout_gravity="center"
+                     android:layout_marginRight="15dp"
+                     android:src="@drawable/ic_scan_qr_code" />
+                 -->
                 <ImageView
                     android:id="@+id/iv_deviceStatus_deviceCardViewItem"
                     android:layout_width="50dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_device_available"
-                    />
+                    android:src="@drawable/ic_device_available" />
+
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- Bouton à droite -->
-        <ImageView
-            android:id="@+id/iv_devicEdit_deviceCardViewItem"
-            android:layout_width="40dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_edit"
-            />
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

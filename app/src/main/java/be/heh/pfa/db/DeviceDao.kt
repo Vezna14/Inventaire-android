@@ -14,6 +14,14 @@ interface DeviceDao {
     @Query("SELECT * FROM devices WHERE id = :deviceId")
     fun getDeviceById(deviceId: Long): DeviceRecord?
 
+    @Query("SELECT * FROM devices WHERE referenceNumber = :deviceReferenceNumber")
+    fun getDeviceByReferenceNumber(deviceReferenceNumber: String): DeviceRecord?
+
+    @Query("Select Exists(SELECT * FROM devices WHERE referenceNumber = :deviceReferenceNumber)")
+    fun isReferenceNumberAlreadyUsed(deviceReferenceNumber: String): Boolean
+
+
+
     @Update
     fun updateDevice(device: DeviceRecord)
 

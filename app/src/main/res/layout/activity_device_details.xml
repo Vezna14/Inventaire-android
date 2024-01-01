@@ -4,17 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".inventory.DeviceDetailsActivity"
+    android:gravity="center|top"
     android:orientation="vertical"
-    android:gravity="center|top">
+    tools:context=".inventory.DeviceDetailsActivity">
+
 
     <ImageView
         android:id="@+id/iv_deviceIcon_deviceDetailsActivity"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/ic_smartphone"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"
-        android:layout_marginTop="25dp"/>
+        android:gravity="center"
+        android:src="@drawable/ic_smartphone" />
+
 
     <TextView
         android:id="@+id/tv_deviceId_deviceDetailsActivity"
@@ -28,64 +31,67 @@
         android:id="@+id/et_deviceType_deviceDetailsActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:ems="13"
         android:inputType="text"
-        android:text="Type"
-        android:layout_marginTop="10dp"/>
+        android:text="Type" />
 
     <EditText
         android:id="@+id/et_deviceBrand_deviceDetailsActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:ems="13"
         android:inputType="text"
-        android:text="Marque"
-        android:layout_marginTop="10dp"/>
+        android:text="Marque" />
 
     <EditText
         android:id="@+id/et_deviceModel_deviceDetailsActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:ems="13"
         android:inputType="text"
-        android:text="Modèle"
-        android:layout_marginTop="10dp"/>
+        android:text="Modèle" />
 
-    <EditText
-        android:id="@+id/et_deviceRefNumber_deviceDetailsActivity"
+    <TextView
+        android:id="@+id/tv_deviceRefNumber_deviceDetailsActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:ems="13"
+        android:textSize="18sp"
         android:inputType="text"
-        android:text="Numéro de reférence unique"
-        android:layout_marginTop="10dp"/>
+        android:text="Numéro de reférence unique" />
 
     <EditText
         android:id="@+id/et_deviceWebsite_deviceDetailsActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:ems="13"
         android:inputType="text"
-        android:text="Site web"
-        android:layout_marginTop="10dp"/>
+        android:text="Site web" />
 
-    <EditText
-        android:id="@+id/et_deviceIsBorrowed_deviceDetailsActivity"
+    <Spinner
+        android:id="@+id/spin_deviceIsBorrowed_deviceDetailsActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:ems="13"
-        android:layout_marginTop="10dp"
         android:inputType="text"
-        android:text="disponible ou pas" />
+        android:entries="@array/Borrowed_notBorrowed_array"
+        />
+
 
     <Button
         android:id="@+id/btn_confirmChanges_deviceDetailsActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirmer les changements"
-        android:ems="10"
         android:layout_marginTop="10dp"
-        android:onClick="deviceDetailsLayoutClickEvent"/>
+        android:ems="10"
+        android:onClick="deviceDetailsLayoutClickEvent"
+        android:text="Confirmer les changements" />
 
 
 </LinearLayout>
