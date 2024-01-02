@@ -18,7 +18,7 @@ interface UserDao {
     @Query("SELECT * FROM Users WHERE email = :email AND password=:password")
      fun getUserByEmailAndPassword(email: String,password: String): UserRecord?
 
-    @Query("SELECT EXISTS (SELECT 1 FROM users WHERE id=1)")
+    @Query("SELECT EXISTS (SELECT * FROM users WHERE isSuperAdmin = 1)")
     fun hasAtLeastOneUser(): Boolean
 
 

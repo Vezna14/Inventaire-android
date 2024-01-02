@@ -30,6 +30,7 @@ class InventoryFragment : Fragment() {
     private lateinit var deviceRecyclerView: RecyclerView
     private lateinit var deviceAdapter: DeviceAdapter
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,7 +49,7 @@ class InventoryFragment : Fragment() {
 
         // Charger les devices depuis la base de données et mettre à jour l'adaptateur
         GlobalScope.launch(Dispatchers.IO) {
-            val db = Room.databaseBuilder(requireContext(), MyDb::class.java, "MyDataBase").build()
+           val db = Room.databaseBuilder(requireContext(), MyDb::class.java, "MyDataBase").build()
             val dao = db.deviceDao()
 
             // Exemple d'insertion pré-population

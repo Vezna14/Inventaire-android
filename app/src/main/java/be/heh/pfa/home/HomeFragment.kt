@@ -51,9 +51,9 @@ class HomeFragment : Fragment() {
         }
 
         val logoutBtn: Button = view.findViewById(R.id.btn_logout_homeFragment)
-            logoutBtn.setOnClickListener {
-                AuthenticatedUser.clearAuthenticatedUser()
-                requireActivity().finish()
+        logoutBtn.setOnClickListener {
+            AuthenticatedUser.clearAuthenticatedUser()
+            requireActivity().finish()
         }
     }
 

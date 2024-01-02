@@ -43,8 +43,10 @@ public class UserAdapter(private val users: MutableList<UserRecord>) : RecyclerV
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
             var currentUser = users[position]
             holder.userEmailTextView.text = currentUser.email
+            var executeOnItemSelected = false
             if (currentUser.isActive) {
                 holder.isActiveImageView.setImageResource(R.drawable.active)
+
                 if (!currentUser.canWrite) {
                     holder.permissionSpinner.setSelection(0)  // position 0 du tableau = R/W
                 } else {
@@ -54,6 +56,7 @@ public class UserAdapter(private val users: MutableList<UserRecord>) : RecyclerV
                 holder.isActiveImageView.setImageResource(R.drawable.inactive)
                 holder.permissionSpinner.setSelection(2)  // position 2 du tableau = compte bloqué
             }
+
 
 
             holder.DeleteUserImageView.setOnClickListener {
@@ -137,67 +140,70 @@ public class UserAdapter(private val users: MutableList<UserRecord>) : RecyclerV
                         position: Int,
                         id: Long
                     ) {
+                        if (executeOnItemSelected) {
+                            // Gérer l'événement de sélection
+                            val selectedPermission = parent?.getItemAtPosition(position).toString()
+                            Log.i("Spinner", "Permission sélectionnée : $selectedPermission")
 
-                        // Gérer l'événement de sélection
-                        val selectedPermission = parent?.getItemAtPosition(position).toString()
-                        Log.i("Spinner", "Permission sélectionnée : $selectedPermission")
+                            // Exécutez le code en fonction du choix
+                            when (selectedPermission) {
+                                "R" -> {
+                                    // Code à exécuter lorsque l'option "R" est sélectionnée
+                                    Toast.makeText(
+                                        holder.itemView.context,
+                                        "Option R sélectionnée",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    currentUser.canWrite = false
+                                    currentUser.isActive = true
+                                    holder.isActiveImageView.setImageResource(R.drawable.active)
 
-                        // Exécutez le code en fonction du choix
-                        when (selectedPermission) {
-                            "R" -> {
-                                // Code à exécuter lorsque l'option "R" est sélectionnée
-                                Toast.makeText(
-                                    holder.itemView.context,
-                                    "Option R sélectionnée",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                currentUser.canWrite = false
-                                currentUser.isActive = true
-                                holder.isActiveImageView.setImageResource(R.drawable.active)
+                                }
 
+                                "R/W" -> {
+                                    // Code à exécuter lorsque l'option "R/W" est sélectionnée
+                                    Toast.makeText(
+                                        holder.itemView.context,
+                                        "Option R/W sélectionnée",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    currentUser.canWrite = true
+                                    currentUser.isActive = true
+                                    holder.isActiveImageView.setImageResource(R.drawable.active)
+                                }
+
+                                "Bloqué" -> {
+                                    // Code à exécuter lorsque l'option "Compte bloqué" est sélectionnée
+                                    Toast.makeText(
+                                        holder.itemView.context,
+                                        "Compte bloqué ",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    currentUser.isActive = false
+                                    holder.isActiveImageView.setImageResource(R.drawable.inactive)
+                                }
                             }
-
-                            "R/W" -> {
-                                // Code à exécuter lorsque l'option "R/W" est sélectionnée
-                                Toast.makeText(
+                            //updateUser(currentUser)
+                            GlobalScope.launch(Dispatchers.IO) {
+                                val db = Room.databaseBuilder(
                                     holder.itemView.context,
-                                    "Option R/W sélectionnée",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                currentUser.canWrite = true
-                                currentUser.isActive = true
-                                holder.isActiveImageView.setImageResource(R.drawable.active)
+                                    MyDb::class.java,
+                                    "MyDataBase"
+                                ).build()
+                                val dao = db.userDao()
+                                val userInfo: UserRecord =
+                                    UserRecord(
+                                        currentUser.id,
+                                        currentUser.email,
+                                        currentUser.password,
+                                        currentUser.canWrite,
+                                        currentUser.isActive,
+                                        currentUser.isSuperAdmin
+                                    )
+                                dao.updateUser(userInfo)
                             }
-
-                            "Bloqué" -> {
-                                // Code à exécuter lorsque l'option "Compte bloqué" est sélectionnée
-                                Toast.makeText(
-                                    holder.itemView.context,
-                                    "Compte bloqué ",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                currentUser.isActive = false
-                                holder.isActiveImageView.setImageResource(R.drawable.inactive)
-                            }
-                        }
-                        //updateUser(currentUser)
-                        GlobalScope.launch(Dispatchers.IO) {
-                            val db = Room.databaseBuilder(
-                                holder.itemView.context,
-                                MyDb::class.java,
-                                "MyDataBase"
-                            ).build()
-                            val dao = db.userDao()
-                            val userInfo: UserRecord =
-                                UserRecord(
-                                    currentUser.id,
-                                    currentUser.email,
-                                    currentUser.password,
-                                    currentUser.canWrite,
-                                    currentUser.isActive,
-                                    currentUser.isSuperAdmin
-                                )
-                            dao.updateUser(userInfo)
+                        }else{
+                            executeOnItemSelected = true
                         }
                     }
 
@@ -207,6 +213,7 @@ public class UserAdapter(private val users: MutableList<UserRecord>) : RecyclerV
 
 
                     }
+
                 }
 
             /*private fun updateUser(user: UserRecord) {
