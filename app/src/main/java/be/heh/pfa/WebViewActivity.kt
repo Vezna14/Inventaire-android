@@ -24,7 +24,6 @@ class WebViewActivity : AppCompatActivity() {
                     return true
                 }
             }
-
         }
     }
 

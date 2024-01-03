@@ -17,25 +17,25 @@
         android:id="@+id/et_deviceBrand_deviceDetailsDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Brand" />
+        android:hint="Marque" />
 
     <EditText
         android:id="@+id/et_deviceModel_deviceDetailsDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Model" />
+        android:hint="Modèle" />
 
     <EditText
         android:id="@+id/et_deviceRefnumber_deviceDetailsDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Reference Number" />
+        android:hint="Numéro de référence" />
 
     <EditText
         android:id="@+id/et_manufacturerWebsite_deviceDetailsDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Manufacturer Website" />
+        android:hint="Site web du fabricant" />
 
     <CheckBox
         android:id="@+id/checkBoxIsBorrowed"

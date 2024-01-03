@@ -46,11 +46,9 @@ class InventoryFragment : Fragment() {
         deviceAdapter = DeviceAdapter(mutableListOf())
         deviceRecyclerView.adapter = deviceAdapter
 
-
         // Charger les devices depuis la base de données et mettre à jour l'adaptateur
         GlobalScope.launch(Dispatchers.IO) {
             val dao = db.deviceDao()
-
             val devicesList = dao.getAllDevices().toMutableList()
             if (devicesList.isNotEmpty()) {
                 withContext(Dispatchers.Main) {
@@ -86,7 +84,6 @@ class InventoryFragment : Fragment() {
             if (devicesList.isNotEmpty()) {
                 withContext(Dispatchers.Main) {
                     deviceAdapter = DeviceAdapter(devicesList)
-
                 }
             }
         }
@@ -106,7 +103,6 @@ class InventoryFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
             if (result.contents != null) {
@@ -124,50 +120,41 @@ class InventoryFragment : Fragment() {
                         isBorrowed = false
                     )
                     AddDeviceInDB(scannedDevice)
+                    //TODO mettre à jour la recyclerView
+                    GlobalScope.launch(Dispatchers.IO) {
+                        //val db = Room.databaseBuilder(requireContext(), MyDb::class.java, "MyDataBase").build()
+                        val dao = db.deviceDao()
+                        val devicesList = dao.getAllDevices().toMutableList()
+                        if (devicesList.isNotEmpty()) {
+                            withContext(Dispatchers.Main) {
+                                deviceAdapter = DeviceAdapter(devicesList)
+                            }
+                        }
+                    }
+                    GlobalScope.launch(Dispatchers.Main){deviceAdapter.addDeviceInRecyclerView(scannedDevice)}
                 } catch (e: Exception) {
                     Toast.makeText(requireContext(), "Erreur lors de la lecture du QR code\nInfo non valide", Toast.LENGTH_SHORT).show()
                 }
             }
         }
-
     }
 
     fun AddDeviceInDB(scannedDevice: DeviceRecord) {
         GlobalScope.launch(Dispatchers.IO) {
-            //val db = Room.databaseBuilder(requireContext(), MyDb::class.java, "MyDataBase").build()
             val dao = db.deviceDao()
             if (dao.isReferenceNumberAlreadyUsed(scannedDevice.referenceNumber.toString())) {
-                Log.i(
-                    "AAAAAAAAAAAAAAAAAAAAAA",
-                    "numéro de référence déjà utilisé, produit déja dans la DB"
-                )
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Ajout inpossimble :\nNuméro de référence déja utilisé",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(requireContext(), "Ajout inpossimble :\nNuméro de référence déja utilisé", Toast.LENGTH_SHORT).show()
                 }
-
             } else {
-                Log.i(
-                    "AAAAAAAAAAAAAAAAAAAAAA",
-                    "numéro de réfénrece pas utilisé, produit pas encore dans la DB"
-                )
                 dao.insertDevice(scannedDevice)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        requireContext(),
-                        "${scannedDevice.brand} ${scannedDevice.model} \na été ajouté à l'inventaire",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(requireContext(), "${scannedDevice.brand} ${scannedDevice.model} \na été ajouté à l'inventaire", Toast.LENGTH_SHORT).show()
+
                 }
             }
-
         }
     }
-
-
 }
 
 

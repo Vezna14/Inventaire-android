@@ -34,7 +34,6 @@ public class UserAdapter(private val users: MutableList<UserRecord>) :
         val isActiveImageView: ImageView = itemView.findViewById(R.id.iv_isActive_userCardViewItem)
     }
 
-
     //onCreateViewHolder crée la vue qui va afficher les items
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val userView =
@@ -65,8 +64,6 @@ public class UserAdapter(private val users: MutableList<UserRecord>) :
             holder.isActiveImageView.setImageResource(R.drawable.inactive)
             holder.permissionSpinner.setSelection(2)  // position 2 du tableau = compte bloqué
         }
-
-
 
         holder.DeleteUserImageView.setOnClickListener {
             //Gérer le clic sur l'cione de poubelle
@@ -112,34 +109,7 @@ public class UserAdapter(private val users: MutableList<UserRecord>) :
                 }
                 // Afficher l'AlertDialog
                 .show()
-
-
-            /*  AlertDialog.Builder(holder.itemView.context)
-                  .setTitle("Options")
-                  .setItems(R.array.permissions_array) { dialog, which ->
-                      when (which) {
-                          0 -> {
-                              // Code à exécuter lorsque l'option "Modifier" est sélectionnée
-                              Toast.makeText(
-                                  holder.itemView.context,
-                                  "Option Modifier sélectionnée",
-                                  Toast.LENGTH_SHORT
-                              ).show()
-                          }
-                          1 -> {
-                              // Code à exécuter lorsque l'option "Supprimer" est sélectionnée
-                              Toast.makeText(
-                                  holder.itemView.context,
-                                  "Option Supprimer sélectionnée",
-                                  Toast.LENGTH_SHORT
-                              ).show()
-                          }
-                      }
-                  }
-                  .show()
-              */
         }
-
 
         holder.permissionSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -152,30 +122,19 @@ public class UserAdapter(private val users: MutableList<UserRecord>) :
                     if (executeOnItemSelected) {
                         // Gérer l'événement de sélection
                         val selectedPermission = parent?.getItemAtPosition(position).toString()
-                        Log.i("Spinner", "Permission sélectionnée : $selectedPermission")
-
                         // Exécutez le code en fonction du choix
                         when (selectedPermission) {
                             "R" -> {
                                 // Code à exécuter lorsque l'option "R" est sélectionnée
-                                Toast.makeText(
-                                    holder.itemView.context,
-                                    "Option R sélectionnée",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast.makeText(holder.itemView.context, "Option R sélectionnée", Toast.LENGTH_SHORT).show()
                                 currentUser.canWrite = false
                                 currentUser.isActive = true
                                 holder.isActiveImageView.setImageResource(R.drawable.active)
-
                             }
 
                             "R/W" -> {
                                 // Code à exécuter lorsque l'option "R/W" est sélectionnée
-                                Toast.makeText(
-                                    holder.itemView.context,
-                                    "Option R/W sélectionnée",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast.makeText(holder.itemView.context, "Option R/W sélectionnée", Toast.LENGTH_SHORT).show()
                                 currentUser.canWrite = true
                                 currentUser.isActive = true
                                 holder.isActiveImageView.setImageResource(R.drawable.active)
@@ -183,22 +142,13 @@ public class UserAdapter(private val users: MutableList<UserRecord>) :
 
                             "Bloqué" -> {
                                 // Code à exécuter lorsque l'option "Compte bloqué" est sélectionnée
-                                Toast.makeText(
-                                    holder.itemView.context,
-                                    "Compte bloqué ",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast.makeText(holder.itemView.context, "Compte bloqué ", Toast.LENGTH_SHORT).show()
                                 currentUser.isActive = false
                                 holder.isActiveImageView.setImageResource(R.drawable.inactive)
                             }
                         }
                         //updateUser(currentUser)
                         GlobalScope.launch(Dispatchers.IO) {
-                            /*val db = Room.databaseBuilder(
-                                holder.itemView.context,
-                                MyDb::class.java,
-                                "MyDataBase"
-                            ).build()*/
                             val db = MyDb.getInstance(holder.itemView.context)
                             val dao = db.userDao()
                             val userInfo: UserRecord =
@@ -220,22 +170,9 @@ public class UserAdapter(private val users: MutableList<UserRecord>) :
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     //Gérer l'événement lorsque rien n'est sélectionné (si nécessaire)
                 }
-
-
             }
 
     }
-
-    /*private fun updateUser(user: UserRecord) {
-GlobalScope.launch(Dispatchers.IO) {
-    val db = Room.databaseBuilder(applicationContext, MyDB::class.java, "MyDataBase").build()
-    val dao = db.userDao()
-    val userInfo: UserRecord =
-        UserRecord(user.id, user.email, user.password, user.canWrite, user.isActive)
-    dao.updateUser(userInfo)
-}
-}*/
-
 
     //retourne le nombre d'item présent dans la liste
     override fun getItemCount(): Int {

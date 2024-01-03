@@ -22,10 +22,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //Toast.makeText(this, AuthenticatedUser.isAdmin.toString(), Toast.LENGTH_SHORT).show()
-
         bottomNavigationView = findViewById(R.id.bottom_navigation_view)
-
 
         // setOnItemSelectedListener pour détecter les changements de sélection
         bottomNavigationView.setOnItemSelectedListener(object :
@@ -43,26 +40,6 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     R.id.navigation_profile -> {
-                        Log.i(
-                            "Main------------------------",
-                            "user IsAdmin :" + AuthenticatedUser.isSuperAdmin.toString()
-                        )
-                        Log.i(
-                            "Main------------------------",
-                            "user IsAdmin :" + AuthenticatedUser.email
-                        )
-                        Log.i(
-                            "Main------------------------",
-                            "user IsAdmin :" + AuthenticatedUser.password
-                        )
-                        Log.i(
-                            "Main------------------------",
-                            "user IsAdmin :" + AuthenticatedUser.isActive.toString()
-                        )
-                        Log.i(
-                            "Main------------------------",
-                            "user IsAdmin :" + AuthenticatedUser.canWrite.toString()
-                        )
                         if (AuthenticatedUser.isSuperAdmin == true) {
                             replaceFragment(UserManagementFragment())
                             return true
@@ -85,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        // Sélectionner le premier élément au lancement
+        // afficher accueil au lancement
         bottomNavigationView.selectedItemId = R.id.navigation_home
     }
 

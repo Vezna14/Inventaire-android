@@ -79,14 +79,17 @@ class HomeFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
             if (result.contents != null) {
                 // Handle the scanned QR code
-                val resultScan = result.contents.split(",")
-                val scannedDeviceRefNumber = resultScan[3]
-                checkDatabase(scannedDeviceRefNumber, isBorrowed)
+                try {
+                    val resultScan = result.contents.split(",")
+                    val scannedDeviceRefNumber = resultScan[3]
+                    checkDatabase(scannedDeviceRefNumber, isBorrowed)
+                } catch (e: Exception) {
+                    Toast.makeText(requireContext(), "Erreur QR Code non Valide", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

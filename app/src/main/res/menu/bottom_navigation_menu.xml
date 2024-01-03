@@ -4,7 +4,7 @@
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/user_icon"
-        android:title="Comptes" />
+        android:title="Profil" />
 
     <item
         android:id="@+id/navigation_home"

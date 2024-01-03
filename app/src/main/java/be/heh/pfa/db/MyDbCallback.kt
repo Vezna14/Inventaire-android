@@ -22,7 +22,7 @@ class MyDbCallback(private val context: Context) : RoomDatabase.Callback() {
 
             // Exemple d'insertion pré-population
             val device1 = DeviceRecord(
-                type = "Mobile",
+                type = "Smartphone",
                 brand = "Samsung",
                 model = "Galaxy S21",
                 referenceNumber = "S21-123",
@@ -31,7 +31,7 @@ class MyDbCallback(private val context: Context) : RoomDatabase.Callback() {
                 isBorrowed = false
             )
             val device2 = DeviceRecord(
-                type = "Tablet",
+                type = "Tablette",
                 brand = "Apple",
                 model = "iPhone 12",
                 referenceNumber = "IP12-123",

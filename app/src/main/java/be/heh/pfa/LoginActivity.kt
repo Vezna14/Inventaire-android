@@ -40,7 +40,6 @@ class LoginActivity : AppCompatActivity() {
             showCreateAdminDialog()
         }*/
         GlobalScope.launch(Dispatchers.IO) {
-            //val db = Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
             val dao = db.userDao()
             val hasUser = dao.hasAtLeastOneUser()
 
@@ -51,15 +50,12 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     //ne pas conserver le champ mdp de la vue login quand l'activité n'est plus visible à l'écran
     override fun onStop() {
         super.onStop()
-
         et_password_loginActivity.text.clear()
-
     }
 
     fun loginLayoutClickEvent(v: View) {
@@ -86,51 +82,19 @@ class LoginActivity : AppCompatActivity() {
                 if (pretendedUser != null) {
                     if (pretendedUser.isActive) {
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(
-                                applicationContext,
-                                "Connexion réussie " + pretendedUser.email,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(applicationContext, "Connexion réussie " + pretendedUser.email, Toast.LENGTH_SHORT).show()
                         }
                         AuthenticatedUser.setAuthenticatedUserInfo(pretendedUser)
-                        Log.i(
-                            "BTN login------------------------",
-                            "user isAdmin :" + AuthenticatedUser.isSuperAdmin.toString()
-                        )
-                        Log.i(
-                            "BTN login------------------------",
-                            "user email :" + AuthenticatedUser.email
-                        )
-                        Log.i(
-                            "BTN login------------------------",
-                            "user password :" + AuthenticatedUser.password
-                        )
-                        Log.i(
-                            "BTN login------------------------",
-                            "user isActive :" + AuthenticatedUser.isActive.toString()
-                        )
-                        Log.i(
-                            "BTN login------------------------",
-                            "user canWrite :" + AuthenticatedUser.canWrite.toString()
-                        )
                         goToMainActivity()
                     } else {
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(
-                                applicationContext,
-                                "Accès refusé.\nCompte bloqué.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(applicationContext, "Accès refusé.\nCompte bloqué.", Toast.LENGTH_SHORT).show()
                         }
                     }
 
                 } else {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(
-                            applicationContext,
-                            "identifiants incorrects",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(applicationContext, "identifiants incorrects", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -138,7 +102,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun goToRegisterActivity(permission: Boolean = false) {
-
         val intent = Intent(this, RegisterActivity::class.java)
         intent.putExtra("permission", permission)
         startActivity(intent)
@@ -146,11 +109,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun goToMainActivity() {
-
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
-
         startActivity(intent)
-
     }
 
     //pop up pour la création du Super Amdin
@@ -165,14 +125,7 @@ class LoginActivity : AppCompatActivity() {
             }
             .create()
             .show()
-
-        /* val prefs = getSharedPreferences("prefs", MODE_PRIVATE)
-         val editor = prefs.edit()
-         editor.putBoolean("firstStart", false)
-         editor.apply()*/
     }
-
-
 }
 
 

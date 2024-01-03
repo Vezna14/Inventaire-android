@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -23,11 +24,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 public class DeviceAdapter(private val devices: MutableList<DeviceRecord>) :
     RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>() {
     private var editDeviceLauncher: ActivityResultLauncher<Intent>? = null
-
 
     class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val deviceIcon: ImageView = itemView.findViewById(R.id.iv_deviceIcon_deviceCardViewItem)
@@ -49,10 +50,7 @@ public class DeviceAdapter(private val devices: MutableList<DeviceRecord>) :
             itemView.findViewById(R.id.iv_devicEdit_deviceCardViewItem)
         val deviceDeleteImageView: ImageView =
             itemView.findViewById(R.id.iv_deleteDevice_deviceCardViewItem)
-
-
     }
-
 
     //onCreateViewHolder crée la vue qui va afficher les items
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceViewHolder {
@@ -60,13 +58,11 @@ public class DeviceAdapter(private val devices: MutableList<DeviceRecord>) :
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.device_cardview_item, parent, false)
 
-
         return DeviceViewHolder(deviceView)
     }
 
     //onBindViewHolder : binder la liste des items avec les widgets (imageView, TextView etc)
     override fun onBindViewHolder(holder: DeviceViewHolder, position: Int) {
-
         val currentDevice = devices[position]
         //cacher le bouton d'édition si l'utilisateur n'a pas les droits
         if (AuthenticatedUser.canWrite) {
@@ -98,9 +94,7 @@ public class DeviceAdapter(private val devices: MutableList<DeviceRecord>) :
             holder.deviceIsBorrowedImageView.setImageResource(R.drawable.ic_device_available)
         }
 
-        // définir des écouteurs de clic pour les éléments si nécessaire
-
-
+        // définir des écouteurs de clic
         //holder.itemView.setOnClickListener { // Logique à exécuter lorsqu'un élément est cliqué }
         holder.deviceManufacturerWebsiteTextView.setOnClickListener {
             // Logique à exécuter lorsqu'un élément est cliqué
@@ -110,7 +104,6 @@ public class DeviceAdapter(private val devices: MutableList<DeviceRecord>) :
             holder.itemView.context.startActivity(intent)
         }
         holder.deviceEditImageView.setOnClickListener {
-
             /*
             //afficher les détails de l'item dans une autre vue et pouvoir y faire des modifications ( il a fallu passer UserRecord en parcelable pour pouvoir passer l'objet en extra)
             var intent = Intent(holder.itemView.context, DeviceDetailsActivity::class.java)
@@ -123,20 +116,16 @@ public class DeviceAdapter(private val devices: MutableList<DeviceRecord>) :
             val inflater = LayoutInflater.from(holder.itemView.context)
             val dialogView = inflater.inflate(R.layout.device_details_alert_dialog_layout, null)
 
-            val spinnerType =
-                dialogView.findViewById<Spinner>(R.id.spin_deviceType_deviceDetailsDialog)
-            val editTextBrand =
-                dialogView.findViewById<EditText>(R.id.et_deviceBrand_deviceDetailsDialog)
-            val editTextModel =
-                dialogView.findViewById<EditText>(R.id.et_deviceModel_deviceDetailsDialog)
-            val editTextRefNumber =
-                dialogView.findViewById<EditText>(R.id.et_deviceRefnumber_deviceDetailsDialog)
-            val editTextManufacturerWebsite =
-                dialogView.findViewById<EditText>(R.id.et_manufacturerWebsite_deviceDetailsDialog)
+            val spinnerType = dialogView.findViewById<Spinner>(R.id.spin_deviceType_deviceDetailsDialog)
+
+            val editTextBrand = dialogView.findViewById<EditText>(R.id.et_deviceBrand_deviceDetailsDialog)
+            val editTextModel = dialogView.findViewById<EditText>(R.id.et_deviceModel_deviceDetailsDialog)
+            val editTextRefNumber = dialogView.findViewById<EditText>(R.id.et_deviceRefnumber_deviceDetailsDialog)
+            val editTextManufacturerWebsite = dialogView.findViewById<EditText>(R.id.et_manufacturerWebsite_deviceDetailsDialog)
             val checkBoxIsBorrowed = dialogView.findViewById<CheckBox>(R.id.checkBoxIsBorrowed)
 
             // Remplissez les champs avec les informations de currentDevice
-            if (currentDevice.type == "Mobile") {
+            if (currentDevice.type == "Smartphone") {
                 spinnerType.setSelection(0)
             } else {
                 spinnerType.setSelection(1)
@@ -160,7 +149,12 @@ public class DeviceAdapter(private val devices: MutableList<DeviceRecord>) :
                     currentDevice.manufacturerWebsite = editTextManufacturerWebsite.text.toString()
                     currentDevice.isBorrowed = !checkBoxIsBorrowed.isChecked
 
-                    // Mettez à jour l'affichage
+                    GlobalScope.launch(Dispatchers.IO) {
+                        val db = MyDb.getInstance(holder.itemView.context)
+                        db.deviceDao().updateDevice(currentDevice)
+                        withContext(Dispatchers.Main) { Toast.makeText(holder.itemView.context, "Matériel modifié", Toast.LENGTH_SHORT).show() }
+                    }
+                    // Mettre à jour l'affichage
                     updateRecyclerViewWithUpdatedDevice(currentDevice, position)
                 }
                 .setNegativeButton("Annuler") { dialog, which ->
@@ -168,10 +162,7 @@ public class DeviceAdapter(private val devices: MutableList<DeviceRecord>) :
                     dialog.dismiss()
                 }
                 .show()
-
         }
-
-
 
         holder.deviceDeleteImageView.setOnClickListener {
             MaterialAlertDialogBuilder(holder.itemView.context)
@@ -188,53 +179,17 @@ public class DeviceAdapter(private val devices: MutableList<DeviceRecord>) :
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, devices.size)
 
-
                 }
                 .setNegativeButton("Non") { dialog, which ->
                     dialog.dismiss()
                 }
                 .show()
-
-
         }
-
     }
-
-
-    /*  AlertDialog.Builder(holder.itemView.context)
-                      .setTitle("Options")
-                      .setItems(R.array.permissions_array) { dialog, which ->
-                          when (which) {
-                              0 -> {
-                                  // Code à exécuter lorsque l'option "Modifier" est sélectionnée
-                                  Toast.makeText(
-                                      holder.itemView.context,
-                                      "Option Modifier sélectionnée",
-                                      Toast.LENGTH_SHORT
-                                  ).show()
-                              }
-                              1 -> {
-                                  // Code à exécuter lorsque l'option "Supprimer" est sélectionnée
-                                  Toast.makeText(
-                                      holder.itemView.context,
-                                      "Option Supprimer sélectionnée",
-                                      Toast.LENGTH_SHORT
-                                  ).show()
-                              }
-                          }
-                      }
-                      .show()
-                  */
-
 
     //retourne le nombre d'item présent dans la liste
     override fun getItemCount(): Int {
         return devices.size
-    }
-
-    fun removeDevice(device: DeviceRecord) {
-        devices.remove(device)
-        notifyDataSetChanged()
     }
 
     fun updateRecyclerViewWithUpdatedDevice(updatedDevice: DeviceRecord, position: Int) {
@@ -242,7 +197,12 @@ public class DeviceAdapter(private val devices: MutableList<DeviceRecord>) :
         notifyItemChanged(position)
         notifyDataSetChanged()
 
+    }
 
+    fun addDeviceInRecyclerView(newDevice: DeviceRecord) {
+        devices.add(newDevice)
+        notifyItemInserted(devices.size - 1)
+        notifyDataSetChanged()
     }
 }
 

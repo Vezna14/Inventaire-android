@@ -33,11 +33,9 @@ class RegisterActivity : AppCompatActivity() {
         db = MyDb.getInstance(applicationContext)
     }
 
-
     fun RegisterLayoutClickEvent(v: View) {
         when (v.id) {
             btn_register_registerActivity.id -> registerNewUser()
-
         }
     }
 
@@ -53,48 +51,27 @@ class RegisterActivity : AppCompatActivity() {
         var confmdp = et_confirmPassword_registerActivity.text.toString()
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(this, "Veuillez entrer une adresse e-mail valide.", Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(this, "Veuillez entrer une adresse e-mail valide.", Toast.LENGTH_SHORT).show()
             return false
         }
         if (!isAlphaNumericAndSpecialChar(mdp)) {
-            Toast.makeText(
-                this,
-                "Le mot de passe ne peut contenir que des caractères alphanumérique (pas d'espace).",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(this, "Le mot de passe ne peut contenir que des caractères alphanumérique (pas d'espace).", Toast.LENGTH_SHORT).show()
         }
 
         if (mdp.length < 4) {
-            Toast.makeText(
-                this,
-                "Le mot de passe doit contenir au moins 4 caractères.",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(this, "Le mot de passe doit contenir au moins 4 caractères.", Toast.LENGTH_SHORT).show()
             return false
         }
-
 
         if (confmdp != mdp) {
-            Toast.makeText(
-                this,
-                "La confirmation du mot de passe ne correspond pas.",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(this, "La confirmation du mot de passe ne correspond pas.", Toast.LENGTH_SHORT).show()
             return false
         }
-
         // Tous les champs sont valides
         return true
     }
 
-    //if (password.contains(" "){print("attention , mdp en un seul mot uniquement")}
     private fun registerNewUser() {
-        // Ajoute une impression de débogage avant d'utiliser "permission"
-        Log.d(
-            "-----------------------------------------RegisterActivity",
-            "Avant d'utiliser permission : $permission"
-        )
         if (validateInput()) {
             val email = et_email_registerActivity.text.toString()
             val password = et_password_registerActivity.text.toString()
@@ -109,23 +86,15 @@ class RegisterActivity : AppCompatActivity() {
 
             // coroutines pour effectuer l'insertion de manière asynchrone
             GlobalScope.launch(Dispatchers.IO) {
-                //val db = Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
                 val dao = db.userDao()
-
                 if (dao.getUserByEmail(user.email) != null) {
                     // Adresse email déjà utilisée
                     // withContext pour passer du contexte IO au contexte principal (UI)
                     //withContext(Dispatchers.Main){} = executer du code dans le THREAD UI
                     withContext(Dispatchers.Main) {
-                        Log.i("RegisterActivity", "Adresse email déjà utilisée")
-                        Toast.makeText(
-                            applicationContext,
-                            "Adresse e-mail déjà utilisée",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(applicationContext, "Adresse e-mail déjà utilisée", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-
                     dao.insertUser(
                         UserRecord(
                             user.id,
@@ -138,11 +107,7 @@ class RegisterActivity : AppCompatActivity() {
                     )
                     //withContext(Dispatchers.Main){} --> executer du code dans le THREAD UI
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(
-                            applicationContext,
-                            "Utilisateur enregistré avec succès",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(applicationContext, "Utilisateur enregistré avec succès", Toast.LENGTH_SHORT).show()
                     }
                     val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                     startActivity(intent)

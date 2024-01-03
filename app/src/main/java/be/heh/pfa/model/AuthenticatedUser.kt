@@ -19,7 +19,6 @@ object AuthenticatedUser {
         isActive = userRecord.isActive
         isSuperAdmin = userRecord.isSuperAdmin
         password = userRecord.password
-        Log.i("USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR", "setAuthenticatedUserInfo: " + email)
     }
 
     fun clearAuthenticatedUser() {
@@ -29,6 +28,5 @@ object AuthenticatedUser {
         isActive = true
         isSuperAdmin = false
         password = ""
-        Log.i("USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR", "CLEARUSER " + email)
     }
 }
