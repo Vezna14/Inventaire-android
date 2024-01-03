@@ -17,6 +17,7 @@
         android:roundIcon="@drawable/box"
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.Pfa"
+
         tools:targetApi="28">
         <activity
             android:name=".WebViewActivity"
@@ -27,8 +28,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:label="@string/title_activity_main"
-            android:theme="@style/Theme.Pfa" />
+            android:label="@string/title_activity_main" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
@@ -40,7 +40,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- scanner en mode portrait -->
+        </activity>
+        <!-- scanner en mode portrait -->
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.room.Room
 
 import be.heh.pfa.R
 import be.heh.pfa.db.MyDb
@@ -25,6 +24,7 @@ class HomeFragment : Fragment() {
 
 
     private var isBorrowed: Boolean = false
+    private lateinit var db: MyDb
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,16 +37,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        db = MyDb.getInstance(requireContext())
 
         // Setup button1
-        val button1: Button = view.findViewById(R.id.btn_borrow_homeFragment)
-        button1.setOnClickListener {
+        val borrowBtn: Button = view.findViewById(R.id.btn_borrow_homeFragment)
+        borrowBtn.setOnClickListener {
             borrowDevice()
         }
 
         // Setup button2
-        val button2: Button = view.findViewById(R.id.btn_giveBack_homeFragment)
-        button2.setOnClickListener {
+        val givebackBtn: Button = view.findViewById(R.id.btn_giveBack_homeFragment)
+        givebackBtn.setOnClickListener {
             giveBackDevice()
         }
 
@@ -92,74 +93,49 @@ class HomeFragment : Fragment() {
 
     private fun checkDatabase(scannedRefNumber: String, isBorrowed: Boolean) {
         GlobalScope.launch(Dispatchers.IO) {
-            val db = Room.databaseBuilder(
-                requireContext(),
-                MyDb::class.java, "MyDataBase"
-            ).build()
             val dao = db.deviceDao()
-
-
-
             var device = withContext(Dispatchers.Default) {
                 dao.getDeviceByReferenceNumber(scannedRefNumber)
             }
 
-
-                if (device != null) {
-                    if(device.isBorrowed == isBorrowed) {
-                        if (device.isBorrowed) {
-                            // matériel déja emprunté
-                            withContext(Dispatchers.Main) {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Le device est déjà emprunté",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-
-                        } else {
-                            // matériel déja remis
-                            withContext(Dispatchers.Main) {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Le device est déja remis dans l'inventaire",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-
+            if (device != null) {
+                if (device.isBorrowed == isBorrowed) {
+                    if (device.isBorrowed) {
+                        // matériel déja emprunté
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(requireContext(), "Le device est déjà emprunté", Toast.LENGTH_SHORT).show()
                         }
-
                     } else {
-                        if (!device.isBorrowed) {
-                            //matériel dispo pour l'emprunt
-                            device.isBorrowed = true
-                            dao.updateDevice(device)
-                            withContext(Dispatchers.Main) {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Vous avez emprunté " + device.brand + " " + device.model,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                        }
-                    }else{
-                            //matériel dispo pour le retour
-                            device.isBorrowed = false
-                            dao.updateDevice(device)
-                            withContext(Dispatchers.Main) {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Vous avez remis " + device.brand + " " + device.model + " dans l'inventaire",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+                        // matériel déja remis
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(requireContext(), "Le device est déja remis dans l'inventaire", Toast.LENGTH_SHORT).show()
                         }
                     }
+
                 } else {
-                    // device not found or doesn't match the criteria
-                    // Handle accordingly
-                    withContext(Dispatchers.Main) {Toast.makeText(requireContext(), "Aucune correspondance avec la base de donnée", Toast.LENGTH_SHORT).show()}
+                    if (!device.isBorrowed) {
+                        //matériel dispo pour l'emprunt
+                        device.isBorrowed = true
+                        dao.updateDevice(device)
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(requireContext(), "Vous avez emprunté " + device.brand + " " + device.model, Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        //matériel dispo pour le retour
+                        device.isBorrowed = false
+                        dao.updateDevice(device)
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(requireContext(), "Vous avez remis " + device.brand + " " + device.model + " dans l'inventaire", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            } else {
+                // matériel pas trouvé
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Aucune correspondance avec la base de donnée", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+}
 

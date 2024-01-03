@@ -26,29 +26,47 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view)
 
+
         // setOnItemSelectedListener pour détecter les changements de sélection
-        bottomNavigationView.setOnItemSelectedListener(object :NavigationBarView.OnItemSelectedListener  {
+        bottomNavigationView.setOnItemSelectedListener(object :
+            NavigationBarView.OnItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 when (item.itemId) {
                     R.id.navigation_home -> {
                         replaceFragment(HomeFragment())
                         return true
                     }
+
                     R.id.navigation_inventory -> {
                         replaceFragment(InventoryFragment())
                         return true
                     }
+
                     R.id.navigation_profile -> {
-                        Log.i("Main------------------------", "user IsAdmin :"+AuthenticatedUser.isSuperAdmin.toString())
-                        Log.i("Main------------------------", "user IsAdmin :"+AuthenticatedUser.email)
-                        Log.i("Main------------------------", "user IsAdmin :"+AuthenticatedUser.password)
-                        Log.i("Main------------------------", "user IsAdmin :"+AuthenticatedUser.isActive.toString())
-                        Log.i("Main------------------------", "user IsAdmin :"+AuthenticatedUser.canWrite.toString())
-                        if(AuthenticatedUser.isSuperAdmin == true){
+                        Log.i(
+                            "Main------------------------",
+                            "user IsAdmin :" + AuthenticatedUser.isSuperAdmin.toString()
+                        )
+                        Log.i(
+                            "Main------------------------",
+                            "user IsAdmin :" + AuthenticatedUser.email
+                        )
+                        Log.i(
+                            "Main------------------------",
+                            "user IsAdmin :" + AuthenticatedUser.password
+                        )
+                        Log.i(
+                            "Main------------------------",
+                            "user IsAdmin :" + AuthenticatedUser.isActive.toString()
+                        )
+                        Log.i(
+                            "Main------------------------",
+                            "user IsAdmin :" + AuthenticatedUser.canWrite.toString()
+                        )
+                        if (AuthenticatedUser.isSuperAdmin == true) {
                             replaceFragment(UserManagementFragment())
                             return true
-                        }
-                        else{
+                        } else {
                             replaceFragment(UserProfileFragment())
                             return true
                         }
@@ -59,7 +77,8 @@ class MainActivity : AppCompatActivity() {
         })
 
         // setOnItemReselectedListener pour détecter les éléments déjà sélectionnés
-        bottomNavigationView.setOnItemReselectedListener(object : NavigationBarView.OnItemReselectedListener {
+        bottomNavigationView.setOnItemReselectedListener(object :
+            NavigationBarView.OnItemReselectedListener {
             override fun onNavigationItemReselected(item: MenuItem) {
                 // Faire quelque chose si l'élément est déjà sélectionné
                 //Todo remonter en haut de la vue si appui sur icone actuelle

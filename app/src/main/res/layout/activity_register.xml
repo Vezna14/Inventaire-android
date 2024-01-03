@@ -12,9 +12,9 @@
 
     <ImageView
         android:id="@+id/iv_register_logo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/btn_star_big_on"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/box"
         android:contentDescription="@string/logo_de_l_appli" />
 
     <TextView

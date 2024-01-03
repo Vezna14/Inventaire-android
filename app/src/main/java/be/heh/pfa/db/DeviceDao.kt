@@ -21,7 +21,6 @@ interface DeviceDao {
     fun isReferenceNumberAlreadyUsed(deviceReferenceNumber: String): Boolean
 
 
-
     @Update
     fun updateDevice(device: DeviceRecord)
 

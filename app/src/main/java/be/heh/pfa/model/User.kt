@@ -2,23 +2,25 @@ package be.heh.pfa.model
 
 import java.security.MessageDigest
 
-class User (
-    var id: Long=0,
+class User(
+    var id: Long = 0,
     var email: String,
     var rawPassword: String,
     var canWrite: Boolean = false,
     var isActive: Boolean = true,
     var isSuperAdmin: Boolean = false
-    ) {
-    var password: String = hashString(rawPassword) // Le mot de passe est haché lors de l'initialisation
+) {
+    var password: String =
+        hashString(rawPassword) // Le mot de passe est haché lors de l'initialisation
 
     // Méthode pour vérifier si l'utilisateur a un accès particulier
-        fun hasWriteAccess(): Boolean {
-            return canWrite
-        }
-        fun changeWriteAccess(perm: Boolean){
-            this.canWrite=perm
-        }
+    fun hasWriteAccess(): Boolean {
+        return canWrite
+    }
+
+    fun changeWriteAccess(perm: Boolean) {
+        this.canWrite = perm
+    }
 
     // Méthode pour modifier le mot de passe
     fun changePassword(newPassword: String) {

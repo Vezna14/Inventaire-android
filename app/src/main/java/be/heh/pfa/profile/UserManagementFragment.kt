@@ -19,13 +19,13 @@ import kotlinx.coroutines.withContext
 class UserManagementFragment : Fragment() {
     private lateinit var userRecyclerView: RecyclerView
     private lateinit var userAdapter: UserAdapter
-
+    private lateinit var db: MyDb
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_usermanagement, container, false)
-
+        db = MyDb.getInstance(requireContext())
         // Récupérer la RecyclerView par son ID
         userRecyclerView = view.findViewById(R.id.userRecyclerView)
         userRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -36,7 +36,7 @@ class UserManagementFragment : Fragment() {
 
         // Charger les utilisateurs depuis la base de données et mettre à jour l'adaptateur
         GlobalScope.launch(Dispatchers.IO) {
-            val db = Room.databaseBuilder(requireContext(), MyDb::class.java, "MyDataBase").build()
+            //val db = Room.databaseBuilder(requireContext(), MyDb::class.java, "MyDataBase").build()
             val dao = db.userDao()
             val usersList = dao.getAllUsers()
 

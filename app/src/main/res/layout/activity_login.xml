@@ -13,9 +13,9 @@
 
     <ImageView
         android:id="@+id/iv_children_logo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/btn_star_big_on"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/box"
         android:contentDescription="@string/logo_de_l_appli"/>
 
     <TextView
@@ -24,13 +24,9 @@
         android:layout_marginBottom="100dp"
         android:text="@string/inventory_manager"
         android:layout_gravity="center"
-        android:textSize="28sp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:text="@string/login"
-        android:textSize="20sp" />
+        android:textSize="28sp"
+        android:gravity="top"/>
+
 
 
     <!-- Button create account -->
@@ -70,7 +66,8 @@
         android:layout_height="wrap_content"
         android:onClick="loginLayoutClickEvent"
         android:text="@string/login"
-        android:layout_marginTop="25dp"/>
+        android:layout_marginTop="25dp"
+        />
 
 
 </LinearLayout>

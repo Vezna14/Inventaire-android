@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.room.Room
 import be.heh.pfa.DeviceAdapter
 import be.heh.pfa.db.MyDb
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_device_details.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -23,21 +24,22 @@ import kotlinx.coroutines.withContext
 
 class DeviceDetailsActivity : AppCompatActivity() {
 
-    var deviceId :Long = 0
-    var deviceType :String = ""
-    var deviceBrand :String = ""
-    var deviceModel :String = ""
-    var deviceReferenceNumber :String = ""
-    var deviceManufacturerWebsite :String = ""
-    var deviceQrCode :String = ""
-    var deviceIsBorrowed : Boolean = false
+    var deviceId: Long = 0
+    var deviceType: String = ""
+    var deviceBrand: String = ""
+    var deviceModel: String = ""
+    var deviceReferenceNumber: String = ""
+    var deviceManufacturerWebsite: String = ""
+    var deviceQrCode: String = ""
+    var deviceIsBorrowed: Boolean = false
     val position = 0
 
-
+    private lateinit var db: MyDb
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_device_details)
 
+        db = MyDb.getInstance(applicationContext)
         val device = intent.getParcelableExtra<DeviceRecord>("device")
         val position = intent.getIntExtra("position", 0)
 
@@ -54,21 +56,23 @@ class DeviceDetailsActivity : AppCompatActivity() {
             deviceIsBorrowed = device.isBorrowed
 
         } else {
-            // Gestion du cas où l'objet DeviceRecord est nul
+            //si l'objet DeviceRecord est nul
             Log.e("DeviceDetailsActivity", "L'objet DeviceRecord est nul.")
             // Peut-être afficher un message d'erreur ou revenir en arrière
             finish()
         }
+
         //appui sur le btn confirmer
         btn_confirmChanges_deviceDetailsActivity.setOnClickListener {
             confirmChangeDialog()
         }
-        if(deviceType == "Mobile"){
-            iv_deviceIcon_deviceDetailsActivity.setImageResource(R.drawable.ic_smartphone)
+
+        when (deviceType) {
+            "Mobile" -> iv_deviceIcon_deviceDetailsActivity.setImageResource(R.drawable.ic_smartphone)
+            "Tablette" -> iv_deviceIcon_deviceDetailsActivity.setImageResource(R.drawable.ic_tablet)
+
         }
-        else if(deviceType == "Tablette"){
-            iv_deviceIcon_deviceDetailsActivity.setImageResource(R.drawable.ic_tablet)
-        }
+
 
         tv_deviceId_deviceDetailsActivity.text = deviceId.toString()
         et_deviceType_deviceDetailsActivity.setText(deviceType)
@@ -76,27 +80,19 @@ class DeviceDetailsActivity : AppCompatActivity() {
         et_deviceModel_deviceDetailsActivity.setText(deviceModel)
         tv_deviceRefNumber_deviceDetailsActivity.setText(deviceReferenceNumber)
         et_deviceWebsite_deviceDetailsActivity.setText(deviceManufacturerWebsite)
-        if (deviceIsBorrowed == false){
+        if (deviceIsBorrowed == false) {
             spin_deviceIsBorrowed_deviceDetailsActivity.setSelection(0)
-        }
-        else{
+        } else {
             spin_deviceIsBorrowed_deviceDetailsActivity.setSelection(1)
         }
-
-
-
-
     }
 
-
-
     fun confirmChangeDialog() {
-        val builder = AlertDialog.Builder(this)
+        val builder = MaterialAlertDialogBuilder(this)
         builder.setTitle("Confirmation")
         builder.setMessage("Voulez-vous vraiment modifier ce matériel ?")
         builder.setPositiveButton("Oui") { dialog, which ->
             updateDevice()
-
         }
         builder.setNegativeButton("Non") { dialog, which ->
             dialog.dismiss()
@@ -106,7 +102,7 @@ class DeviceDetailsActivity : AppCompatActivity() {
     }
 
     fun updateDevice() {
-        val id=deviceId
+        val id = deviceId
         val type = et_deviceType_deviceDetailsActivity.text.toString()
         val brand = et_deviceBrand_deviceDetailsActivity.text.toString()
         val model = et_deviceModel_deviceDetailsActivity.text.toString()
@@ -114,48 +110,35 @@ class DeviceDetailsActivity : AppCompatActivity() {
         val manufacturerWebsite = et_deviceWebsite_deviceDetailsActivity.text.toString()
         //val qrCode = et_deviceIsBorrowed_deviceDetailsActivity.text.toString()
         var isBorrowed = deviceIsBorrowed
-        if (spin_deviceIsBorrowed_deviceDetailsActivity.selectedItem.toString() == "Disponible"){
+        if (spin_deviceIsBorrowed_deviceDetailsActivity.selectedItem.toString() == "Disponible") {
             isBorrowed = false
-        }
-        else{
+        } else {
             isBorrowed = true
         }
 
-
-        var deviceToUpdate = DeviceRecord(id, type, brand, model, referenceNumber, manufacturerWebsite, deviceQrCode, isBorrowed)
-       GlobalScope.launch(Dispatchers.IO) {
-           val db = Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
-           val dao = db.deviceDao()
-           dao.updateDevice(deviceToUpdate)
-           withContext(Dispatchers.Main) {
-               Toast.makeText(applicationContext, "Matériel modifié", Toast.LENGTH_SHORT).show()
-               val resultIntent = Intent()
-               resultIntent.putExtra("updatedDevice", deviceToUpdate)
-               resultIntent.putExtra("position", position)
-               setResult(2, resultIntent)
-               finish()
-           }
-       }
-    }
-
-    fun deleteDevice() {
-        val id=deviceId
-        val type = deviceType
-        val brand = deviceBrand
-        val model = deviceModel
-        val referenceNumber = deviceReferenceNumber
-        val manufacturerWebsite = deviceManufacturerWebsite
-        val qrCode = deviceQrCode
-        val isBorrowed = deviceIsBorrowed
-
-        var deviceToDelete = DeviceRecord(id, type, brand, model, referenceNumber, manufacturerWebsite, qrCode, isBorrowed)
+        var deviceToUpdate = DeviceRecord(
+            id,
+            type,
+            brand,
+            model,
+            referenceNumber,
+            manufacturerWebsite,
+            deviceQrCode,
+            isBorrowed
+        )
         GlobalScope.launch(Dispatchers.IO) {
-            val db = Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
+            //val db = Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
             val dao = db.deviceDao()
-            dao.deleteDevice(deviceToDelete)
+            dao.updateDevice(deviceToUpdate)
             withContext(Dispatchers.Main) {
-                Toast.makeText(applicationContext, "Matériel supprimé", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@DeviceDetailsActivity, "Matériel modifié", Toast.LENGTH_SHORT).show()
+                val resultIntent = Intent()
+                resultIntent.putExtra("updatedDevice", deviceToUpdate)
+                resultIntent.putExtra("position", position)
+                setResult(2, resultIntent)
+                finish()
             }
         }
     }
+
 }

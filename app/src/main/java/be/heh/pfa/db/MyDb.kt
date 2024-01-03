@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [UserRecord::class,DeviceRecord::class], version = 1)
+@Database(entities = [UserRecord::class, DeviceRecord::class], version = 1)
 abstract class MyDb : RoomDatabase() {
     /* Pour chaque classe DAO associée à la base de données,
     la classe de base de données doit définir une méthode abstraite
@@ -19,6 +19,7 @@ abstract class MyDb : RoomDatabase() {
         @Volatile
         private var INSTANCE: MyDb? = null
 
+        //la méthode getInstance est responsable de créer ou de retourner l'instance de db.
         fun getInstance(context: Context): MyDb {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database

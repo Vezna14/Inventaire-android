@@ -4,14 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardBackgroundColor="#416750A4"
-    app:cardCornerRadius="5dp">
+    app:cardCornerRadius="8dp"
+    android:theme="@style/Base.Theme.Pfa"
+    app:cardBackgroundColor="?attr/colorSecondaryContainer">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,8 +51,10 @@
                 <ImageView
                     android:id="@+id/iv_devicEdit_deviceCardViewItem"
                     android:layout_width="35dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/ic_edit" />
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_edit"
+                    android:layout_marginLeft="20dp"
+                    />
             </LinearLayout>
         </LinearLayout>
 
@@ -74,7 +78,8 @@
                     android:layout_marginRight="6dp"
                     android:text="Brand"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSecondaryContainer"/>
 
                 <TextView
                     android:id="@+id/tv_deviceModel_deviceCardViewItem"
@@ -82,7 +87,8 @@
                     android:layout_height="wrap_content"
                     android:text="Model Placeholder"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSecondaryContainer"/>
             </LinearLayout>
 
             <TextView
@@ -91,7 +97,8 @@
                 android:layout_height="wrap_content"
                 android:text="Device Type Placeholder"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSecondaryContainer"/>
 
 
             <TextView
@@ -100,7 +107,8 @@
                 android:layout_height="wrap_content"
                 android:text="Device Ref Number Placeholder"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSecondaryContainer"/>
 
             <TextView
                 android:id="@+id/tv_deviceManufacturerWebsite_deviceCardViewItem"
@@ -109,7 +117,10 @@
                 android:text="Device Website Placeholder"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#0338FD"
+                android:textColor="?attr/colorOnSecondaryContainer"
+                android:drawableRight="@drawable/ic_open_in_new"
+                android:drawableTint="?attr/colorPrimary"
+                android:drawablePadding="5dp"
                 />
 
             <LinearLayout

@@ -19,10 +19,7 @@ class UserProfileFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
 
-
-
-
-        }
+    }
 
 
     override fun onCreateView(
@@ -36,9 +33,11 @@ class UserProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tv_email_userProfileFragment.text = "Email : " + AuthenticatedUser.email
-        tv_password_userProfileFragment.text = "Mot de passe : " + AuthenticatedUser.password
-        tv_canWrite_userProfileFragment.text = "Peut modifier matériel : " + AuthenticatedUser.canWrite.toString()
-        tv_isActive_userProfileFragment.text = "Est actif : " + AuthenticatedUser.isActive.toString()
+        //tv_password_userProfileFragment.text = "Mot de passe : " + AuthenticatedUser.password
+        tv_canWrite_userProfileFragment.text =
+            "Peut modifier matériel : " + AuthenticatedUser.canWrite.toString()
+        tv_isActive_userProfileFragment.text =
+            "Est actif : " + AuthenticatedUser.isActive.toString()
     }
 
 

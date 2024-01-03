@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
-        tools:itemCount="5"/>
+        tools:itemCount="5" />
 
     <ImageView
         android:id="@+id/iv_addDevice_fragmentInventory"
@@ -21,5 +21,6 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         />
+
 
 </RelativeLayout>

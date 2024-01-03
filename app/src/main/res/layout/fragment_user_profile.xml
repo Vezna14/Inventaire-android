@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,7 +7,8 @@
     android:layout_height="match_parent"
     android:gravity="center|top"
     android:orientation="vertical"
-    tools:context=".profile.UserProfileFragment">
+    tools:context=".profile.UserProfileFragment"
+    android:theme="@style/Base.Theme.Pfa">
 
 
     <ImageView
@@ -14,33 +16,35 @@
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:src="@drawable/user_icon"
-        android:layout_marginBottom="25dp" />
+        android:layout_marginBottom="22dp" />
 
     <TextView
         android:id="@+id/tv_email_userProfileFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email Placeholder"
-        android:textSize="25sp"/>
+        android:textSize="22sp"
+        android:minEms="9"
+        android:layout_gravity="center"
+        />
 
-    <TextView
-        android:id="@+id/tv_password_userProfileFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Password Placeholder"
-        android:textSize="25sp"/>
+
 
     <TextView
         android:id="@+id/tv_canWrite_userProfileFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Permission Placeholder"
-        android:textSize="25sp"/>
+        android:textSize="22sp"
+        android:minEms="9"
+        android:layout_gravity="center"/>
     <TextView
         android:id="@+id/tv_isActive_userProfileFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="IsActive Placeholder"
-        android:textSize="25sp"/>
+        android:textSize="22sp"
+        android:minEms="9"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

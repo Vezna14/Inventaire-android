@@ -11,12 +11,15 @@ class WebViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web_view)
 
-        val url= intent.getStringExtra("url")
+        val url = intent.getStringExtra("url")
         if (url != null) {
             wv_ManufacturerWebsite_WebViewActivity.loadUrl(url)
             wv_ManufacturerWebsite_WebViewActivity.settings.javaScriptEnabled = true
-            wv_ManufacturerWebsite_WebViewActivity.webViewClient = object: WebViewClient(){
-                override fun shouldOverrideUrlLoading(view: android.webkit.WebView?, url: String?): Boolean {
+            wv_ManufacturerWebsite_WebViewActivity.webViewClient = object : WebViewClient() {
+                override fun shouldOverrideUrlLoading(
+                    view: android.webkit.WebView?,
+                    url: String?
+                ): Boolean {
                     view?.loadUrl(url!!)
                     return true
                 }
@@ -27,7 +30,7 @@ class WebViewActivity : AppCompatActivity() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
 
-        if (keyCode == KeyEvent.KEYCODE_BACK && wv_ManufacturerWebsite_WebViewActivity.canGoBack()){
+        if (keyCode == KeyEvent.KEYCODE_BACK && wv_ManufacturerWebsite_WebViewActivity.canGoBack()) {
             wv_ManufacturerWebsite_WebViewActivity.goBack()
             return true
         }

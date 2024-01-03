@@ -11,6 +11,7 @@ import androidx.room.Room
 import be.heh.pfa.db.MyDb
 import be.heh.pfa.model.AuthenticatedUser
 import be.heh.pfa.model.User
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 //importer les éléments du layout activity main
 import kotlinx.android.synthetic.main.activity_login.*
@@ -21,10 +22,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var db: MyDb
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        db = MyDb.getInstance(applicationContext)
 
     }
 
@@ -38,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
             showCreateAdminDialog()
         }*/
         GlobalScope.launch(Dispatchers.IO) {
-            val db = Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
+            //val db = Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
             val dao = db.userDao()
             val hasUser = dao.hasAtLeastOneUser()
 
@@ -68,52 +70,82 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkCredential() {
-        var mail=et_email_loginActivity.text.toString()
+        var mail = et_email_loginActivity.text.toString()
         var mdp = et_password_loginActivity.text.toString()
 
-        if (mail.isEmpty() || mdp.isEmpty()){
+        if (mail.isEmpty() || mdp.isEmpty()) {
             Toast.makeText(this, "Veuillez compléter tous les champs", Toast.LENGTH_SHORT).show()
-        }
-        else{
+        } else {
             val user = User(0, mail, mdp)
             // Utilisation de coroutines pour effectuer la vérif avec la DB de manière asynchrone
             GlobalScope.launch(Dispatchers.IO) {
-                val db =Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
+                // val db =Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
                 val dao = db.userDao()
                 //val dbl=dao.getAllUsers()
-                var pretendedUser = dao.getUserByEmailAndPassword(user.email,user.password)
-                if(pretendedUser != null ){
-                    if(pretendedUser.isActive){
-                        withContext(Dispatchers.Main){Toast.makeText(applicationContext,"Connexion réussie "+ pretendedUser.email,Toast.LENGTH_SHORT).show()}
+                var pretendedUser = dao.getUserByEmailAndPassword(user.email, user.password)
+                if (pretendedUser != null) {
+                    if (pretendedUser.isActive) {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Connexion réussie " + pretendedUser.email,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                         AuthenticatedUser.setAuthenticatedUserInfo(pretendedUser)
-                        Log.i("BTN login------------------------", "user isAdmin :"+AuthenticatedUser.isSuperAdmin.toString())
-                        Log.i("BTN login------------------------", "user email :"+AuthenticatedUser.email)
-                        Log.i("BTN login------------------------", "user password :"+AuthenticatedUser.password)
-                        Log.i("BTN login------------------------", "user isActive :"+AuthenticatedUser.isActive.toString())
-                        Log.i("BTN login------------------------", "user canWrite :"+AuthenticatedUser.canWrite.toString())
+                        Log.i(
+                            "BTN login------------------------",
+                            "user isAdmin :" + AuthenticatedUser.isSuperAdmin.toString()
+                        )
+                        Log.i(
+                            "BTN login------------------------",
+                            "user email :" + AuthenticatedUser.email
+                        )
+                        Log.i(
+                            "BTN login------------------------",
+                            "user password :" + AuthenticatedUser.password
+                        )
+                        Log.i(
+                            "BTN login------------------------",
+                            "user isActive :" + AuthenticatedUser.isActive.toString()
+                        )
+                        Log.i(
+                            "BTN login------------------------",
+                            "user canWrite :" + AuthenticatedUser.canWrite.toString()
+                        )
                         goToMainActivity()
-                    }
-                    else{
-                        withContext(Dispatchers.Main){Toast.makeText(applicationContext,"Accès refusé.\nCompte bloqué.",Toast.LENGTH_SHORT).show()}
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Accès refusé.\nCompte bloqué.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
 
-                }
-                else{
-                    withContext(Dispatchers.Main){Toast.makeText(applicationContext,"identifiants incorrects",Toast.LENGTH_SHORT).show()}
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            applicationContext,
+                            "identifiants incorrects",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         }
+    }
 
-    private fun goToRegisterActivity(permission: Boolean = false){
+    private fun goToRegisterActivity(permission: Boolean = false) {
 
-        val intent = Intent(this,RegisterActivity::class.java)
-        intent.putExtra("permission",permission)
+        val intent = Intent(this, RegisterActivity::class.java)
+        intent.putExtra("permission", permission)
         startActivity(intent)
 
     }
 
-    private fun goToMainActivity(){
+    private fun goToMainActivity() {
 
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
 
@@ -123,7 +155,7 @@ class LoginActivity : AppCompatActivity() {
 
     //pop up pour la création du Super Amdin
     private fun showCreateAdminDialog() {
-        AlertDialog.Builder(this)
+        MaterialAlertDialogBuilder(this)
             .setTitle("Configuration du Super Admin")
             .setMessage("Il s'agit du premier démarrage de l'application.\nAppuyez sur OK pour configurer le Super Admin.")
             .setCancelable(false)
@@ -134,15 +166,11 @@ class LoginActivity : AppCompatActivity() {
             .create()
             .show()
 
-       /* val prefs = getSharedPreferences("prefs", MODE_PRIVATE)
-        val editor = prefs.edit()
-        editor.putBoolean("firstStart", false)
-        editor.apply()*/
+        /* val prefs = getSharedPreferences("prefs", MODE_PRIVATE)
+         val editor = prefs.edit()
+         editor.putBoolean("firstStart", false)
+         editor.apply()*/
     }
-
-
-
-
 
 
 }

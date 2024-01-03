@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <Spinner
+        android:id="@+id/spin_deviceType_deviceDetailsDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:entries="@array/device_type_array"
+        />
+
+    <EditText
+        android:id="@+id/et_deviceBrand_deviceDetailsDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Brand" />
+
+    <EditText
+        android:id="@+id/et_deviceModel_deviceDetailsDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Model" />
+
+    <EditText
+        android:id="@+id/et_deviceRefnumber_deviceDetailsDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Reference Number" />
+
+    <EditText
+        android:id="@+id/et_manufacturerWebsite_deviceDetailsDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Manufacturer Website" />
+
+    <CheckBox
+        android:id="@+id/checkBoxIsBorrowed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="disponible pour emprunt" />
+
+</LinearLayout>

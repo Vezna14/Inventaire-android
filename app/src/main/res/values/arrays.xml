@@ -13,4 +13,9 @@
         <item>indisponible</item>
         <!-- Ajoutez d'autres options si nécessaire -->
     </string-array>
+
+    <string-array name="device_type_array">
+        <item>Smartphone</item>
+        <item>Tablette</item>
+    </string-array>
 </resources>

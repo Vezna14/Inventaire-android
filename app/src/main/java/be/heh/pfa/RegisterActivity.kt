@@ -22,7 +22,7 @@ import java.util.regex.Pattern
 
 class RegisterActivity : AppCompatActivity() {
     var permission: Boolean = false
-
+    private lateinit var db: MyDb
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,43 +30,57 @@ class RegisterActivity : AppCompatActivity() {
         permission = intent?.getBooleanExtra("permission", false) ?: false
         // débogage pour vérifier la valeur de "permission"
         Log.d("----------------------RegisterActivity", "Valeur de permission : $permission")
-
+        db = MyDb.getInstance(applicationContext)
     }
 
 
-
-     fun RegisterLayoutClickEvent(v: View) {
+    fun RegisterLayoutClickEvent(v: View) {
         when (v.id) {
             btn_register_registerActivity.id -> registerNewUser()
 
         }
     }
+
     fun isAlphaNumericAndSpecialChar(input: String): Boolean {
         val pattern = Pattern.compile("^[a-zA-Z0-9!@#\$%^&*()-_+=<>?/{}|:]*$")
         return pattern.matcher(input).matches()
     }
+
     private fun validateInput(): Boolean {
         //vérification des champs mail mdp et confirmation mdp
-        var email =et_email_registerActivity.text.toString()
-        var mdp= et_password_registerActivity.text.toString()
+        var email = et_email_registerActivity.text.toString()
+        var mdp = et_password_registerActivity.text.toString()
         var confmdp = et_confirmPassword_registerActivity.text.toString()
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(this, "Veuillez entrer une adresse e-mail valide.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Veuillez entrer une adresse e-mail valide.", Toast.LENGTH_SHORT)
+                .show()
             return false
         }
-        if (!isAlphaNumericAndSpecialChar(mdp)){
-            Toast.makeText(this, "Le mot de passe ne peut contenir que des caractères alphanumérique (pas d'espace).", Toast.LENGTH_SHORT).show()
+        if (!isAlphaNumericAndSpecialChar(mdp)) {
+            Toast.makeText(
+                this,
+                "Le mot de passe ne peut contenir que des caractères alphanumérique (pas d'espace).",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         if (mdp.length < 4) {
-            Toast.makeText(this, "Le mot de passe doit contenir au moins 4 caractères.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "Le mot de passe doit contenir au moins 4 caractères.",
+                Toast.LENGTH_SHORT
+            ).show()
             return false
         }
 
 
         if (confmdp != mdp) {
-            Toast.makeText(this, "La confirmation du mot de passe ne correspond pas.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "La confirmation du mot de passe ne correspond pas.",
+                Toast.LENGTH_SHORT
+            ).show()
             return false
         }
 
@@ -77,15 +91,25 @@ class RegisterActivity : AppCompatActivity() {
     //if (password.contains(" "){print("attention , mdp en un seul mot uniquement")}
     private fun registerNewUser() {
         // Ajoute une impression de débogage avant d'utiliser "permission"
-        Log.d("-----------------------------------------RegisterActivity", "Avant d'utiliser permission : $permission")
+        Log.d(
+            "-----------------------------------------RegisterActivity",
+            "Avant d'utiliser permission : $permission"
+        )
         if (validateInput()) {
             val email = et_email_registerActivity.text.toString()
             val password = et_password_registerActivity.text.toString()
-            val user = User(id=0, email=email, rawPassword=password, canWrite=permission, isActive=true,isSuperAdmin=permission)
+            val user = User(
+                id = 0,
+                email = email,
+                rawPassword = password,
+                canWrite = permission,
+                isActive = true,
+                isSuperAdmin = permission
+            )
 
             // coroutines pour effectuer l'insertion de manière asynchrone
             GlobalScope.launch(Dispatchers.IO) {
-                val db = Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
+                //val db = Room.databaseBuilder(applicationContext, MyDb::class.java, "MyDataBase").build()
                 val dao = db.userDao()
 
                 if (dao.getUserByEmail(user.email) != null) {
@@ -94,21 +118,40 @@ class RegisterActivity : AppCompatActivity() {
                     //withContext(Dispatchers.Main){} = executer du code dans le THREAD UI
                     withContext(Dispatchers.Main) {
                         Log.i("RegisterActivity", "Adresse email déjà utilisée")
-                        Toast.makeText(applicationContext,"Adresse e-mail déjà utilisée",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            applicationContext,
+                            "Adresse e-mail déjà utilisée",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
 
-                    dao.insertUser(UserRecord(user.id, user.email, user.password, user.canWrite, user.isActive, user.isSuperAdmin))
+                    dao.insertUser(
+                        UserRecord(
+                            user.id,
+                            user.email,
+                            user.password,
+                            user.canWrite,
+                            user.isActive,
+                            user.isSuperAdmin
+                        )
+                    )
                     //withContext(Dispatchers.Main){} --> executer du code dans le THREAD UI
-                    withContext(Dispatchers.Main) {Toast.makeText(applicationContext, "Utilisateur enregistré avec succès", Toast.LENGTH_SHORT).show()}
-                    val intent = Intent(this@RegisterActivity,LoginActivity::class.java)
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            applicationContext,
+                            "Utilisateur enregistré avec succès",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                     startActivity(intent)
                 }
             }
         }
 
-            et_password_registerActivity.text.clear()
-            et_confirmPassword_registerActivity.text.clear()
+        et_password_registerActivity.text.clear()
+        et_confirmPassword_registerActivity.text.clear()
     }
 }
 

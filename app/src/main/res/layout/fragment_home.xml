@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".home.HomeFragment"
     android:background="@drawable/ic_scan_qr_code"
-    android:backgroundTint="#2C676068"
+    android:backgroundTint="?attr/colorSurfaceVariant"
     android:layout_margin="25dp">
 
 
@@ -72,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Déconnexion"
-        android:backgroundTint="#E91E63"/>
+        android:backgroundTint="?attr/colorSecondary"/>
 
 
 </LinearLayout>
