@@ -20,7 +20,7 @@
 
         tools:targetApi="28">
         <activity
-            android:name=".WebViewActivity"
+            android:name=".inventory.WebViewActivity"
             android:exported="false" />
         <activity
             android:name=".inventory.DeviceDetailsActivity"

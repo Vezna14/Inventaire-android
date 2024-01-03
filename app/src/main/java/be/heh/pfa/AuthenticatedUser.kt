@@ -1,6 +1,5 @@
-package be.heh.pfa.model
+package be.heh.pfa
 
-import android.util.Log
 import be.heh.pfa.db.UserRecord
 
 object AuthenticatedUser {

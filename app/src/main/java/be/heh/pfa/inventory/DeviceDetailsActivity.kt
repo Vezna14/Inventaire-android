@@ -1,19 +1,13 @@
 package be.heh.pfa.inventory
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import be.heh.pfa.R
 import be.heh.pfa.db.DeviceRecord
 import android.content.Intent
-import android.util.AttributeSet
 import android.util.Log
-import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.room.Room
-import be.heh.pfa.DeviceAdapter
 import be.heh.pfa.db.MyDb
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_device_details.*
@@ -30,7 +24,6 @@ class DeviceDetailsActivity : AppCompatActivity() {
     var deviceModel: String = ""
     var deviceReferenceNumber: String = ""
     var deviceManufacturerWebsite: String = ""
-    var deviceQrCode: String = ""
     var deviceIsBorrowed: Boolean = false
     val position = 0
 
@@ -52,7 +45,6 @@ class DeviceDetailsActivity : AppCompatActivity() {
             deviceModel = device.model.toString()
             deviceReferenceNumber = device.referenceNumber.toString()
             deviceManufacturerWebsite = device.manufacturerWebsite.toString()
-            deviceQrCode = device.qrCode.toString()
             deviceIsBorrowed = device.isBorrowed
 
         } else {
@@ -123,7 +115,6 @@ class DeviceDetailsActivity : AppCompatActivity() {
             model,
             referenceNumber,
             manufacturerWebsite,
-            deviceQrCode,
             isBorrowed
         )
         GlobalScope.launch(Dispatchers.IO) {

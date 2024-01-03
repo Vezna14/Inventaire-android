@@ -7,15 +7,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.concurrent.Executors
-import be.heh.pfa.db.MyDb
 
 class MyDbCallback(private val context: Context) : RoomDatabase.Callback() {
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
         Log.i("AppDatabaseCallback", "onCreate callback is called")
-        // Insérez ici le code pour pré-peupler la base de données
-        // Vous pouvez utiliser un objet DAO pour effectuer des opérations d'insertion
+        // code pour pré-peupler la base de données
         GlobalScope.launch(Dispatchers.IO) {
             Log.i("AppDatabaseCallback", "Inserting data into the database")
             val deviceDao = MyDb.getInstance(context).deviceDao()
@@ -27,7 +24,6 @@ class MyDbCallback(private val context: Context) : RoomDatabase.Callback() {
                 model = "Galaxy S21",
                 referenceNumber = "S21-123",
                 manufacturerWebsite = "https://www.samsung.com",
-                qrCode = "QR123",
                 isBorrowed = false
             )
             val device2 = DeviceRecord(
@@ -36,7 +32,6 @@ class MyDbCallback(private val context: Context) : RoomDatabase.Callback() {
                 model = "iPhone 12",
                 referenceNumber = "IP12-123",
                 manufacturerWebsite = "https://www.apple.com",
-                qrCode = "QR456",
                 isBorrowed = false
             )
 

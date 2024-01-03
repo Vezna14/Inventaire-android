@@ -1,4 +1,4 @@
-package be.heh.pfa.model
+package be.heh.pfa
 
 import java.security.MessageDigest
 

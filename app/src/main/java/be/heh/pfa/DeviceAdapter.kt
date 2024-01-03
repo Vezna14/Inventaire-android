@@ -1,8 +1,7 @@
 package be.heh.pfa
 
-import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,15 +11,10 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import be.heh.pfa.db.DeviceRecord
 import be.heh.pfa.db.MyDb
-import be.heh.pfa.inventory.DeviceDetailsActivity
-import be.heh.pfa.model.AuthenticatedUser
+import be.heh.pfa.inventory.WebViewActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -169,11 +163,13 @@ public class DeviceAdapter(private val devices: MutableList<DeviceRecord>) :
             MaterialAlertDialogBuilder(holder.itemView.context)
                 .setTitle("Confirmation")
                 .setMessage("Voulez-vous vraiment supprimer ce matériel ?")
-                .setPositiveButton("Oui") { dialog, which ->
+                .setPositiveButton("Oui") { dialog :DialogInterface?, which :Int ->
 
                     GlobalScope.launch(Dispatchers.IO) {
                         val db = MyDb.getInstance(holder.itemView.context)
-                        db.deviceDao().deleteDevice(currentDevice)
+                        val dao = db.deviceDao()
+                        dao.deleteDevice(currentDevice)
+                        withContext(Dispatchers.Main) { Toast.makeText(holder.itemView.context, "Matériel supprimé", Toast.LENGTH_SHORT).show() }
                     }
                     // Mettre à jour l'affichage
                     devices.removeAt(position)

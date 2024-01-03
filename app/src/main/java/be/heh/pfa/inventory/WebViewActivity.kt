@@ -1,9 +1,10 @@
-package be.heh.pfa
+package be.heh.pfa.inventory
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
 import android.webkit.WebViewClient
+import be.heh.pfa.R
 import kotlinx.android.synthetic.main.activity_web_view.wv_ManufacturerWebsite_WebViewActivity
 
 class WebViewActivity : AppCompatActivity() {

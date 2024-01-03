@@ -14,12 +14,10 @@ data class DeviceRecord(
     var model: String?,
     var referenceNumber: String?,
     var manufacturerWebsite: String?,
-    var qrCode: String?,
     var isBorrowed: Boolean
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
-        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -41,7 +39,6 @@ data class DeviceRecord(
         dest.writeString(model)
         dest.writeString(referenceNumber)
         dest.writeString(manufacturerWebsite)
-        dest.writeString(qrCode)
         dest.writeByte(if (isBorrowed) 1 else 0)
     }
 

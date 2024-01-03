@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.room.Room
 import be.heh.pfa.db.MyDb
 import be.heh.pfa.db.UserRecord
-import be.heh.pfa.model.User
 
 //importer les éléments du layout activity register
 import kotlinx.android.synthetic.main.activity_register.*

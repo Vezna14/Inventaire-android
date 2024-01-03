@@ -80,11 +80,6 @@ public class UserAdapter(private val users: MutableList<UserRecord>) :
                     // Code exécuté lorsque l'utilisateur clique sur "Confirmer"
                     Log.i("AlertDialog", "Confirmation")
                     GlobalScope.launch(Dispatchers.IO) {
-                        /*val db = Room.databaseBuilder(
-                            holder.itemView.context,
-                            MyDb::class.java,
-                            "MyDataBase"
-                        ).build()*/
                         val db = MyDb.getInstance(holder.itemView.context)
                         val dao = db.userDao()
                         val userInfo: UserRecord =
@@ -103,9 +98,10 @@ public class UserAdapter(private val users: MutableList<UserRecord>) :
                     notifyItemRangeChanged(position, users.size)
                 }
                 // Bouton "Annuler"
-                .setNegativeButton("Annuler") { dialog: DialogInterface?, which: Int ->
+                .setNegativeButton("Annuler") { dialog, which: Int ->
                     // Code exécuté lorsque l'utilisateur clique sur "Annuler" (facultatif)
                     Log.i("AlertDialog", "Annulation")
+                    dialog.dismiss()
                 }
                 // Afficher l'AlertDialog
                 .show()

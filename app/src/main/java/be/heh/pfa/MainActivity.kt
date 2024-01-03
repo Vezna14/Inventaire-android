@@ -1,15 +1,11 @@
 package be.heh.pfa
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
-import be.heh.pfa.db.DeviceRecord
 import be.heh.pfa.home.HomeFragment
 import be.heh.pfa.inventory.InventoryFragment
-import be.heh.pfa.model.AuthenticatedUser
 import be.heh.pfa.profile.UserManagementFragment
 import be.heh.pfa.profile.UserProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView

@@ -11,7 +11,7 @@ import android.widget.Toast
 
 import be.heh.pfa.R
 import be.heh.pfa.db.MyDb
-import be.heh.pfa.model.AuthenticatedUser
+import be.heh.pfa.AuthenticatedUser
 import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.CaptureActivity
 
