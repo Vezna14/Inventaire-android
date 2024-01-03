@@ -30,7 +30,7 @@ class InventoryFragment : Fragment() {
     private lateinit var deviceRecyclerView: RecyclerView
     private lateinit var deviceAdapter: DeviceAdapter
     private lateinit var db: MyDb
-
+    var devicesList = mutableListOf<DeviceRecord>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +49,7 @@ class InventoryFragment : Fragment() {
         // Charger les devices depuis la base de données et mettre à jour l'adaptateur
         GlobalScope.launch(Dispatchers.IO) {
             val dao = db.deviceDao()
-            val devicesList = dao.getAllDevices().toMutableList()
+            devicesList = dao.getAllDevices().toMutableList()
             if (devicesList.isNotEmpty()) {
                 withContext(Dispatchers.Main) {
                     deviceAdapter = DeviceAdapter(devicesList)
@@ -120,18 +120,9 @@ class InventoryFragment : Fragment() {
                         isBorrowed = false
                     )
                     AddDeviceInDB(scannedDevice)
-                    //TODO mettre à jour la recyclerView
-                    GlobalScope.launch(Dispatchers.IO) {
-                        //val db = Room.databaseBuilder(requireContext(), MyDb::class.java, "MyDataBase").build()
-                        val dao = db.deviceDao()
-                        val devicesList = dao.getAllDevices().toMutableList()
-                        if (devicesList.isNotEmpty()) {
-                            withContext(Dispatchers.Main) {
-                                deviceAdapter = DeviceAdapter(devicesList)
-                            }
-                        }
-                    }
-                    GlobalScope.launch(Dispatchers.Main){deviceAdapter.addDeviceInRecyclerView(scannedDevice)}
+                    devicesList.add(scannedDevice)
+                    deviceAdapter.notifyDataSetChanged()
+                    
                 } catch (e: Exception) {
                     Toast.makeText(requireContext(), "Erreur lors de la lecture du QR code\nInfo non valide", Toast.LENGTH_SHORT).show()
                 }

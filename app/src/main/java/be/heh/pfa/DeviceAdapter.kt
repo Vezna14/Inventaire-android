@@ -2,6 +2,7 @@ package be.heh.pfa
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,7 @@ import kotlinx.coroutines.withContext
 
 public class DeviceAdapter(private val devices: MutableList<DeviceRecord>) :
     RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>() {
-    private var editDeviceLauncher: ActivityResultLauncher<Intent>? = null
+
 
     class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val deviceIcon: ImageView = itemView.findViewById(R.id.iv_deviceIcon_deviceCardViewItem)
@@ -195,15 +196,9 @@ public class DeviceAdapter(private val devices: MutableList<DeviceRecord>) :
     fun updateRecyclerViewWithUpdatedDevice(updatedDevice: DeviceRecord, position: Int) {
         devices[position] = updatedDevice
         notifyItemChanged(position)
-        notifyDataSetChanged()
 
     }
 
-    fun addDeviceInRecyclerView(newDevice: DeviceRecord) {
-        devices.add(newDevice)
-        notifyItemInserted(devices.size - 1)
-        notifyDataSetChanged()
-    }
 }
 
 
